@@ -1,4 +1,4 @@
 *.pro.user
-bulid.*
+build.*
 template/*
 example/*
