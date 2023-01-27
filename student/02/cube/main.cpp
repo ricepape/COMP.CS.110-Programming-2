@@ -12,13 +12,13 @@ int main()
     int triple = pow(number,3);
     if (number>-1) {
         if (triple<number) {
-            cout << "Error! The cube of " << number << " is not " << triple << " ." << endl;
+            cout << "Error! The cube of " << number << " is not " << triple << "." << endl;
         }
     else if (number<0){
         if (triple>number) {
-            cout << "Error! The cube of " << number << " is not " << triple << " ." << endl;
+            cout << "Error! The cube of " << number << " is not " << triple << "." << endl;
     }}
-    else {cout << "The cube of " << number << " is " << triple << " ." << endl;}
+    else {cout << "The cube of " << number << " is " << triple << "." << endl;}
 }
     return 0;
 }
