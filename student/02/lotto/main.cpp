@@ -24,13 +24,13 @@ int main()
     if (lottery<1){
         cout << "The number of balls must be a positive number." << endl;
         return 0;
-    } else if (drawn >= lottery){
+    } else if (drawn > lottery){
         cout << "The maximum number of drawn balls is the total amount of balls." << endl;
         return 0;
     } else {
         int different_combinations= 0;
         different_combinations= multiply(lottery)/(multiply(lottery-drawn)*multiply(drawn));
-        cout <<"The probability of guessing all " << drawn <<" correct is 1/" <<different_combinations << endl;
+        cout <<"The probability of guessing all " << drawn <<" balls correctly is 1/" <<different_combinations << endl;
     }
 
 
