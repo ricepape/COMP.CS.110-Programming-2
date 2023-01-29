@@ -36,7 +36,7 @@ int main()
     cout << "Enter the text to be encrypted: " ;
     string encrypted;
     getline(cin,encrypted);
-    string::size_type len2 = encrypted.length();
+    int len2 = encrypted.length();
     int l=0;
     string new_line;
     while (l<len2){
