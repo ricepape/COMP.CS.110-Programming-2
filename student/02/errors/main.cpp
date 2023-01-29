@@ -27,7 +27,7 @@ int main() {
     int guesses_used = 0;
 
     while ( not is_word_earlier_guessed(secret_word, guessed_letters)
-              and guesses_used < MAX_GUESSES ) {
+              and guesses_used <= MAX_GUESSES ) {
 
         cout << endl
              << "Game status: ";
@@ -64,7 +64,7 @@ int main() {
         }
 
         ++guesses_used;
-
+}
     if ( not is_word_earlier_guessed(secret_word, guessed_letters) ) {
         cout << endl
              << "Guesses expired!"
@@ -78,7 +78,7 @@ int main() {
              << endl;
     }
     }
-}
+
 
 void clean_screen() {
     // Cleaning screen by printing 100 empty lines.
