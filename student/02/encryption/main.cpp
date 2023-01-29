@@ -39,12 +39,16 @@ int main()
     getline(cin,encrypted);
     int len2 = encrypted.length();
     int l=0;
-    for( char letter1 = 'a'; (letter1 < 'z'); ++letter1 ){
-        string::size_type count = encrypted.find(letter1,0);
-           if (count==string::npos){
-                cout <<"Error! The text to be encrypted must contain all alphabets a-z."<<endl;
-                return EXIT_FAILURE;
-        }}
+    int x=0;
+    while (x<len2){
+
+        char letter = encrypted.at(k);
+        if (isupper(letter)){
+            cout <<"Error! The text to be encrypted must contain only lower case characters."<<endl;
+            return EXIT_FAILURE;
+        }
+        k+=1;
+    }
     string new_line;
     while (l<len2){
         int ascii_value_of_ch = static_cast<int>(encrypted.at(l));
