@@ -26,6 +26,7 @@ int main()
                     string::size_type count = encrypt.find(letter1,0);
                        if (count==string::npos){
                             cout <<"Error! The encryption key must contain all alphabets a-z."<<endl;
+                            return EXIT_FAILURE;
                     }}
 
                  }
@@ -38,6 +39,12 @@ int main()
     getline(cin,encrypted);
     int len2 = encrypted.length();
     int l=0;
+    for( char letter1 = 'a'; (letter1 < 'z'); ++letter1 ){
+        string::size_type count = encrypted.find(letter1,0);
+           if (count==string::npos){
+                cout <<"Error! The text to be encrypted must contain all alphabets a-z."<<endl;
+                return EXIT_FAILURE;
+        }}
     string new_line;
     while (l<len2){
         int ascii_value_of_ch = static_cast<int>(encrypted.at(l));
