@@ -42,12 +42,12 @@ int main()
     int x=0;
     while (x<len2){
 
-        char letter = encrypted.at(k);
+        char letter = encrypted.at(x);
         if (isupper(letter)){
             cout <<"Error! The text to be encrypted must contain only lower case characters."<<endl;
             return EXIT_FAILURE;
         }
-        k+=1;
+        x++;
     }
     string new_line;
     while (l<len2){
