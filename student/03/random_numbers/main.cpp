@@ -25,14 +25,13 @@ int main()
     cin >> lower_bound;
     cout << "Enter an upper bound: ";
     cin >> upper_bound;
-    cout << "Enter a seed value: ";
     if(lower_bound >= upper_bound)
     {
         cout << "The upper bound must be strictly greater than the lower bound"
              << endl;
         return EXIT_FAILURE;
     }
-
+    cout << "Enter a seed value: ";
     cin >> seed_value;
     cout << endl;
 
