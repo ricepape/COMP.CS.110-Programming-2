@@ -7,9 +7,9 @@ using namespace std;
 void produce_random_numbers(unsigned int lower, unsigned int upper, unsigned int seed)
 {
     string word = "c";
+    default_random_engine gen(seed);
+    uniform_int_distribution<int> distr(lower, upper);
     while (word!="q"){
-        default_random_engine gen(seed);
-        uniform_int_distribution<int> distr(lower, upper);
         cout << "Your drawn random number is " << distr(gen) << endl;
         cout << "Press q to quit or any other key to continue: ";
         cin >> word;
@@ -26,9 +26,6 @@ int main()
     cout << "Enter an upper bound: ";
     cin >> upper_bound;
     cout << "Enter a seed value: ";
-    cin >> seed_value;
-    cout << endl;
-
     if(lower_bound >= upper_bound)
     {
         cout << "The upper bound must be strictly greater than the lower bound"
@@ -36,7 +33,11 @@ int main()
         return EXIT_FAILURE;
     }
 
+    cin >> seed_value;
+    cout << endl;
+
     produce_random_numbers(lower_bound, upper_bound,seed_value);
+
 
     return EXIT_SUCCESS;
 }
