@@ -29,7 +29,7 @@ void Account::generate_iban()
 
 void Account::print() const
 {
-    std::cout << Account::owner_ <<" : " << Account::iban_ << " : "<< Account::balance_ << std::endl;
+    std::cout << owner_ <<" : " << iban_ << " : "<< balance_ << " euros"<<std::endl;
 }
 
 void Account::save_money(int save){
