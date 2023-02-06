@@ -8,7 +8,7 @@ class Player
 public:
     //Constructor
     Player(const std::string name);
-    void add_points(int pts);
+    void add_points(unsigned long int pts);
     bool has_won();
     std::string get_name();
     int get_points();
