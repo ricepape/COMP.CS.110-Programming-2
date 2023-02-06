@@ -16,14 +16,17 @@ int Player::get_points(){
 bool Player::has_won(){
     if (points_!=50){
         return false;
+    } else {
+        return true;
     }
-    else return true;
 }
 
 void Player::add_points(unsigned long int pts){
-    points_+=pts;
-    if (points_>50){
+    if (points_+pts>50){
         points_=25;
-        std::cout<<name_<<" gets penalty points!"<<std::endl;
+        std::cout << name_ <<" gets penalty points!" <<std::endl;
+    } else{
+        points_+=pts;
     }
+
 }
