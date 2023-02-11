@@ -67,11 +67,16 @@ bool is_arithmetic_series(std::vector<int>& ints){
 bool is_geometric_series(std::vector<int>& ints){
     int count_false = 0;
     int k=0;
+    if (ints[k]==0){
+        return false;}
+    else {
     int ratio = ints[k+1]/ints[k];
     for (int k = 0; k < int(ints.size())-1; ++k ){
-        if ((ints[k+1]/ints[k])!=ratio){
+        if (ints[k]==0){
             count_false+=1;
-        }}
+        } else if ((ints[k+1]/ints[k])!=ratio){
+            count_false+=1;
+        }}}
     if (count_false>0){
         return false;}
     else return true;
