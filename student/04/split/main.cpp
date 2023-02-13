@@ -6,18 +6,22 @@
 std::vector< std::string > split (std::string line, char separator, bool value = false){
         std::vector< std::string > string_no_empty;
         std::vector< std::string > string_with_empty;
-        std::string part;
-        int string_length= line.size();
-        for (int i=0; (i < string_length);i++){
+        std::string part="";
+        for (int i=0; (i < int (line.size()));i++){
             if (line[i]==separator){
+                if (part!="")
+                {
                 string_no_empty.push_back(part);
+                }
                 string_with_empty.push_back(part);
-                string_with_empty.push_back("");
-                part="";
+                part.clear();
             } else{
                 part.push_back(line[i]);
             }
+
         }
+        string_no_empty.push_back(part);
+        string_with_empty.push_back(part);
         if (value==true){
             return string_no_empty;
         } else return string_with_empty;
