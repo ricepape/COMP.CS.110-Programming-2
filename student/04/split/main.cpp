@@ -3,8 +3,25 @@
 #include <vector>
 
 
-// TODO: Implement split function here
-// Do not change main function
+std::vector< std::string > split (std::string line, char separator, bool value = false){
+        std::vector< std::string > string_no_empty;
+        std::vector< std::string > string_with_empty;
+        std::string part;
+        int string_length= line.size();
+        for (int i=0; (i < string_length);i++){
+            if (line[i]==separator){
+                string_no_empty.push_back(part);
+                string_with_empty.push_back(part);
+                string_with_empty.push_back("");
+                part="";
+            } else{
+                part.push_back(line[i]);
+            }
+        }
+        if (value==true){
+            return string_no_empty;
+        } else return string_with_empty;
+}
 
 
 int main()
