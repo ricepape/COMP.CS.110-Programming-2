@@ -49,6 +49,165 @@ enum Color{R,G,B,Y,W,Error};
 
 using Enumtype = vector<Color>;
 
+// Return the colors in the enum using the values corresponding
+Color string_to_color(char const &name)
+{
+    if (name == 'R')
+        return R;
+
+    else if (name == 'G')
+        return G;
+
+    else if (name == 'B')
+        return B;
+
+    else if (name == 'Y')
+        return Y;
+
+    else if (name == 'W')
+        return W;
+
+    else
+        return Error;
+
+}
+
+//Declare the vector ENUM_TO_COLOR to call for the colors based on the values created by enum
+const vector<string> ENUM_TO_COLOR = {"R", "G", "B", "Y", "W"};
+
+/**
+ * @Function read_numbers: Read the numerical values of the carpet (width and height) putting in
+ * @parameter: width, int; The width of the carpet
+ * @parameter: height, int; The height of the carpet
+ * The width and value is typed in, have checked and stores into the parameters above
+ * Return true if width and height are greater or equal to 2, false if any else case
+ * */
+bool read_numbers(int &width, int &height) {
+
+  cout << "Enter carpet's width and height: ";
+  cin >> width >> height;
+  return width >= 2 && height >= 2;
+
+}
+
+
+/**
+ * @Function read_input: Read the pattern colors as the requirement to find in the carpet
+ * @parameter: input, string;
+ * After the function, the input pattern that needs to find in the carpet
+ * is stored in input
+ * return the pattern needs to find as string type
+ * */
+string read_input(string &input)
+{
+    cout << "Enter 4 colors, or q to quit: ";
+    cin >> input;
+    //Upper the input pattern
+    std::transform(input.begin(), input.end(), input.begin(), ::toupper);
+    if (input == "Q")
+    {
+        return input;
+    }
+    //Check the amount of colors, as the pattern is 2x2, which is 4
+    if (input.length() != 4)
+    {
+        cout << " Error: Wrong amount of colors." << endl;
+        return read_input(input);
+    }
+    //Check if all the input colors is declared.
+    else if (!checkString(input))
+    {
+        cout << " Error: Unknown color." << endl;
+        return read_input(input);
+    }
+    return input;
+}
+
+
+
+/**
+ * @Function create_string: Create the carpet in terms of the string,
+ * if the user choose to create the carpet randomly
+ * @parameter: seed, int; the seed value to create the random carpet
+ * @parameter: width, int; the width of the carpet
+ * @parameter: height, int; the height of the carpet
+ * @parameter: key, string; contain the random carpet
+ * return the randomly created carpet as a string - key.
+ * */
+string create_string(int seed, int width, int height)
+{
+    string key = "";
+    default_random_engine rand_gen;
+    if (to_string(seed) == "")
+    {
+        // If the user did not give a seed value,
+        // use computer time as the seed value.
+        rand_gen.seed(time(NULL));
+    }
+    else
+    {
+        // If the user gave a seed value, use it.
+        rand_gen.seed(seed);
+    }
+    uniform_int_distribution<int> distr(0, 4);
+    for (int y = 0; y < width * height; ++y)
+    {
+        int u = distr(rand_gen);
+        //Getting the color with the enum value and the const vector.
+        key.append((ENUM_TO_COLOR.at(u)));
+    }
+    return key;
+}
+
+
+
+void read_command(string &command, int width, int height, Pattern &Data, Enumtype &Carpet)
+{
+    string initial;
+    int seed;
+
+    cout << "Select start (R for random, I for input): ";
+    cin >> command;
+
+    // upercase the string
+    std::transform(command.begin(), command.end(), command.begin(), ::toupper);
+
+    //The user enters the carpet him/herself
+    if (command == "I")
+    {
+        cout << "Input: ";
+        cin >> initial;
+
+        //Check if the length of the input carpet is equal to the length given before
+        if (int(initial.length()) != width * height)
+        {
+            cout << " Error: Wrong amount of colors." << endl;
+            //Restart the process of entering the carpet
+            return read_command(command, width, height, Data, Carpet);
+        }
+
+        //Check if the colors in the carpet is declared in enum.
+        if (!checkString(initial))
+        {
+            cout << " Error: Unknown color." << endl;
+            return read_command(command, width, height, Data, Carpet);
+        }
+    }
+
+    //The user choose to create the carpet randomly
+    else if (command == "R")
+    {
+        cout << "Enter a seed value: ";
+        cin >> seed;
+        initial = create_string(seed, width, height);
+    }
+    else
+        return read_command(command, width, height, Data, Carpet);
+
+
+}
+
+
 int main() {
 
   int width, height;
