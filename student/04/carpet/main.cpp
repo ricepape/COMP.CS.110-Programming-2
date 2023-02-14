@@ -142,6 +142,30 @@ string read_input(string &input)
 }
 
 
+/**
+ * @Function find_square: Find the pattern required in the carpet
+ * @parameter: input, string; the input pattern that needs to find in the carpet
+ * @parameter: width, int; the width of the carpet
+ * @parameter: Data, vector<char> Pattern; the created carpet
+ * print out the frequency of the pattern in the carpet if any, and its position
+ * */
+void find_square(string input, int width, Pattern Data)
+{
+    int count = 0;
+    //
+    for (size_t i = 1; i < Data.size() - width; i++)
+    {
+        //Check if each data in a 2x2 pattern part of the carpet is equal to that of the input pattern.
+        if (Data.at(i - 1) == input.at(0) && Data.at(i) == input.at(1)
+            && input.at(2) == Data.at((i - 1 + width)) && input.at(3) == Data.at((i + width)))
+
+        {//Check the position in column and rows of the data
+            cout << " - Found at (" << i % width << ", " << i / width + 1 << ")" << endl;
+            count++;
+        }
+    }
+    cout << " = Matches found: " << count << endl;
+}
 
 /**
  * @Function print_pattern: Print the carpet created, either by random or input
