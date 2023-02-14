@@ -218,6 +218,25 @@ string create_string(int seed, int width, int height)
 }
 
 
+/**
+ * @Function convert_string_to_vector: After creating the string carpet, convert the carpet to vector type
+ * @parameter: Data, vector<char> Pattern; containing the carpet as a vector of letters
+ * @parameter: Carpet, vector<Color> Enumtype; containing the carpet as a vector of numbers correspond to the enum values
+ * @parameter: initial, string; the carpet value as a string
+ *
+ * */
+void convert_string_to_vector(Pattern &Data, string initial, Enumtype &Carpet)
+{
+    for (int i = 0; i < int(initial.length()); i++)
+    {
+        //Add the values into the char vector Pattern Data as color values correspoding to the enum declaration.
+        Data.push_back(initial[i]);
+
+        //Add the values into the vector Carpet as color letters
+        Carpet.push_back(string_to_color(initial[i]));
+    }
+}
+
 
 
 /**
