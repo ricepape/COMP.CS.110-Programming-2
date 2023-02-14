@@ -90,6 +90,24 @@ bool read_numbers(int &width, int &height) {
 
 }
 
+/**
+ * @Function checkString: Check if the string contains the right colors as declared
+ * @parameter: s, constant_string; The pattern as a string
+ * Return true if all colors are declared, return false for any else case.
+ * */
+
+bool checkString(const string &s) {
+  for (char c : s) {
+    string a(1, c);
+
+    //Find if the color typed in exists in the enum COLOR which has been declared.
+    if (find(ENUM_TO_COLOR.begin(), ENUM_TO_COLOR.end(), a) ==
+        ENUM_TO_COLOR.end()) {
+        return false;
+    }
+  }
+  return true;
+}
 
 /**
  * @Function read_input: Read the pattern colors as the requirement to find in the carpet
