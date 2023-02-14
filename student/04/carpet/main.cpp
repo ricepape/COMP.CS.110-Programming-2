@@ -144,6 +144,22 @@ string read_input(string &input)
 
 
 /**
+ * @Function print_pattern: Print the carpet created, either by random or input
+ * @parameter: width, int; the width of the carpet
+ * @parameter: Carpet, vector<Color> Enumtype; the created carpet
+ * */
+//
+void print_pattern(int width, Enumtype Carpet)
+{
+    for (size_t i = 1; i <= Carpet.size(); i++)
+    {
+        cout << " " << ENUM_TO_COLOR.at(Carpet.at(i - 1));
+        if (i % width == 0)
+             cout << endl;
+    }
+}
+
+/**
  * @Function create_string: Create the carpet in terms of the string,
  * if the user choose to create the carpet randomly
  * @parameter: seed, int; the seed value to create the random carpet
@@ -179,6 +195,19 @@ string create_string(int seed, int width, int height)
 
 
 
+
+/**
+ * @Function read_command: perform various steps in the program, including:
+ * - Select the way to create the carpet, either in random or manual
+ * - Enter the seed if choosing random, or enter the carpet if choosing manual
+ * - Check the input carpet if manual
+ * @parameter: Data, vector<char> Pattern; containing the carpet as a vector of letters
+ * @parameter: width, int; the width of the carpet
+ * @parameter: height, int; the height of the carpet
+ * @parameter: Carpet, vector<Color> Enumtype; containing the carpet as a vector of numbers correspond to the enum values
+ * @parameter: command, string; storing the command for creating the carpet
+ *
+ * */
 void read_command(string &command, int width, int height, Pattern &Data, Enumtype &Carpet)
 {
     string initial;
@@ -222,7 +251,8 @@ void read_command(string &command, int width, int height, Pattern &Data, Enumtyp
     else
         return read_command(command, width, height, Data, Carpet);
 
-
+    convert_string_to_vector(Data, initial, Carpet);
+    print_pattern(width, Carpet);
 }
 
 
