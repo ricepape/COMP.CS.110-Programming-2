@@ -44,7 +44,7 @@
 using namespace std;
 using Pattern = vector<char>;
 
-// Declare the color used in the carpet
+// Declare the color used in the carpet (Red, Green, Blue, Yellow, White)
 enum Color{R,G,B,Y,W,Error};
 
 using Enumtype = vector<Color>;
@@ -152,7 +152,8 @@ string read_input(string &input)
 void find_square(string input, int width, Pattern Data)
 {
     int count = 0;
-    //
+    //Checking the patterns in the carpet. The patterns can be directed from the top right element in each pattern.
+    //Thus, the pattern starts from the second column, and finish in the second-to-last row.
     for (size_t i = 1; i < Data.size() - width; i++)
     {
         //Check if each data in a 2x2 pattern part of the carpet is equal to that of the input pattern.
