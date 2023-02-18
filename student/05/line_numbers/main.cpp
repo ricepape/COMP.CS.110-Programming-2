@@ -21,17 +21,18 @@ int main()
             int count = 1;
             string line;
             string new_line;
+            ofstream output;
+            output.open(output_filename);
             while ( getline(file_object, line) ) {
-                new_line+=count;
+                new_line+=to_string(count);
                 new_line.append(" ");
                 new_line.append(line);
-                line=new_line;
-                ofstream output;
-                output.open(output_filename);
+                new_line+='\n';
                 output << new_line;
                 new_line="";
-                output.close();
+                count+=1;
             }
+            output.close();
             file_object.close();
 
         }
