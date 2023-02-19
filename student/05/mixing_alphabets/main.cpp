@@ -18,9 +18,13 @@ int main()
         {
             return EXIT_SUCCESS;
         }
-
-        // TODO: implement your solution here
-	
+        if (word.length()>2){
+            char first_letter=word[0];
+            char last_letter=word.back();
+            word=word.substr(1,word.length()-2);
+            shuffle(word.begin(), word.end(), generator);
+            word=first_letter+word+last_letter;
+        }
         std::cout << word << std::endl;
     }
 }
