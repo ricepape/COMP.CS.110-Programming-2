@@ -15,13 +15,17 @@ bool palindrome_recursive(std::string s)
   if (s.length()<2){
       return true;
   }
-  else if ((s.length()==2)and(s[0]=s[1])){
+  if ((s.length()==2)and(s[0]=s[1])){
       return true;
   }
-  else if (s[0]==s[s.length()-1])
+  else if (s.length()==2 and s[0]!=s[1])
+      return false;
+  if (s[0]==s[s.length()-1])
     {
-      s.erase(s.length()-1);
-      s.erase(0);
+      std::cout << s << std::endl;
+      s.erase(s.length()-1,1);
+      s.erase(0,1);
+      std::cout <<s << std::endl;
       return palindrome_recursive(s);
     }
     else
