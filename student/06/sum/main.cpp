@@ -32,6 +32,15 @@ int sum_recursive(std::vector<int>& v){
 
 
     // Add your implementation here
+    int count=v.size();
+    if (count!=0){
+        v[count-2]+=v[count-1];
+        v.pop_back();
+        return sum_recursive(v);
+    } else {
+        return v[0];
+    }
+
 }
 
 // Do not modify rest of the code, or the automated testing won't work.
