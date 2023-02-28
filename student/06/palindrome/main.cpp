@@ -12,26 +12,27 @@ bool palindrome_recursive(std::string s)
 
 
   // Add your implementation here
-  if (s.length()<2){
-      return true;
-  }
-  if ((s.length()==2)and(s[0]=s[1])){
-      return true;
-  }
-  else if (s.length()==2 and s[0]!=s[1])
-      return false;
-  if (s[0]==s[s.length()-1])
-    {
-      std::cout << s << std::endl;
-      s.erase(s.length()-1,1);
-      s.erase(0,1);
-      std::cout <<s << std::endl;
-      return palindrome_recursive(s);
-    }
-    else
-    {return false;}
+     if (s.length() == 0)
+         return false;
+     else
+          {
+                int t=0;
+                int u = s.length()-1;
+                if (s.at(t)==s.at(u))
+                {
+                    s=s.erase(u,1);
+                    s=s.erase(t,1);
+                    //std::cout << s <<std::endl;
+                    //std::cout << s.length() <<std::endl;
+                    if (s.length() == 1 or s.length () ==0)
+                      return true;
+                    else
+                       return palindrome_recursive(s);
+                }
+                else
+                    return false;
 
-}
+}}
 
 // Do not modify rest of the code, or the automated testing won't work.
 #ifndef UNIT_TESTING
