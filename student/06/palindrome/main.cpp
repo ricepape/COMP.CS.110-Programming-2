@@ -13,13 +13,13 @@ bool palindrome_recursive(std::string s)
 
   // Add your implementation here
   int length =static_cast<int>(s.size());
-  if (length>1){
+  if (length<=1){
       return true;
   }
-  else if (s[0]==s[length-1])
+  else if (s[0]==s[length])
     {
       std::cout << s;
-      s.erase(s[length-1]);
+      s.erase(s[length]);
       s.erase(s[0]);
       std::cout << s;
       return palindrome_recursive(s);
