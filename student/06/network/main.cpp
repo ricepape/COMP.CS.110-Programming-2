@@ -83,12 +83,10 @@ int depth(std::string const &id,NET const &network)
     return n+1;
 }
 
-
 int main()
 {
     // TODO: Implement the datastructure here
     NET network;
-
 
     while(true)
     {
@@ -117,6 +115,7 @@ int main()
 
             // TODO: Implement the command here!
 
+            store(id1,id2,network);
         }
         else if(command == "P" or command == "p")
         {
@@ -128,7 +127,7 @@ int main()
             std::string id = parts.at(1);
 
             // TODO: Implement the command here!
-
+            print(id,"",network);
         }
         else if(command == "C" or command == "c")
         {
@@ -140,7 +139,7 @@ int main()
             std::string id = parts.at(1);
 
             // TODO: Implement the command here!
-
+            std::cout << count(id,network) << std::endl;
         }
         else if(command == "D" or command == "d")
         {
@@ -152,6 +151,7 @@ int main()
             std::string id = parts.at(1);
 
             // TODO: Implement the command here!
+            std::cout << depth(id,network) << std::endl;
 
         }
         else if(command == "Q" or command == "q")
