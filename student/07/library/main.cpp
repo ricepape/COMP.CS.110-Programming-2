@@ -174,7 +174,7 @@ map<string, vector<Book>> read_books(string filename) {
             } else {
                 books[split_line[0]].push_back(book);
             }
-
+        // print the errors that occurs during the function process
         } catch (invalid_argument &e) {
             throw invalid_argument(e);
         }
@@ -207,6 +207,36 @@ bool sort_vector_by_title(const Book & a,
     return a.title < b.title;
 }
 
+bool check_library_exists(map<string, vector<Book>> books, string b){
+    // Denote a flag for the existance of the library given by user
+    bool library_exist = true;
+    // Check if the library exists
+    for (auto &pair : books) {
+        if (pair.first == b) {
+            //If there exists the library, the flag would be denoted as false
+            library_exist = false;
+            break;
+        }
+    }
+    return library_exist;
+}
+
+bool check_author_exists(map<string, vector<Book>> books, string b,string c){
+    // Denote a flag for the existance of the library given by user
+    bool author_exist = true;
+    for (auto &pair : books) {
+        if (pair.first == b) {
+            for (const Book &book : pair.second) {
+                if (book.author == c) {
+                    author_exist = false;
+                    break;
+                }
+            }
+        }
+    }
+    return author_exist;
+}
+
 /**
  * @Function print_material: print the books and their authors in a library given
  * by the user
@@ -218,18 +248,9 @@ bool sort_vector_by_title(const Book & a,
  *
  * */
 void print_material(map<string, vector<Book>> books, string b) {
-    // Denote a flag for the existance of the library given by user
-    bool library_exist = true;
-    // Check if the library exists
-    for (auto &pair : books) {
-        if (pair.first == b) {
-            //If there exists the library, the flag would be denoted as false
-            library_exist = false;
-            break;
-        }
-    }
+
     //If the flag stays being true, then the library does not exists in the file
-    if (library_exist) {
+    if (check_library_exists(books,b)) {
         //Print error warning
         cout << "Error: unknown library" << endl;
         return;
@@ -249,13 +270,9 @@ void print_material(map<string, vector<Book>> books, string b) {
 }
 
 
-
 /**
  * @Function print_libraries: print all the libraries in the input file
  * @parameter: books, map<string, vector<Book>>: a map containing
- * @parameter: condition, int: containing the number of the condition, which represents
- * the command of the user
- * @parameter: b, string:
  *
  * */
 void print_libraries(map<string, vector<Book>> books) {
@@ -270,32 +287,14 @@ void print_libraries(map<string, vector<Book>> books) {
 void print_books(map<string, vector<Book>> books, string b, string c) {
     // books <library> <author>
     map<string, int> book_title;
-    bool library_exist = true;
-    bool author_exist = true;
     // check library exists
-    for (auto &pair : books) {
-        if (pair.first == b) {
-            library_exist = false;
-            break;
-        }
-    }
-    if (library_exist) {
+    //If the flag stays being true, then the library does not exists in the file
+    if (check_library_exists(books,b)) {
+        //Print error warning
         cout << "Error: unknown library" << endl;
         return;
     }
-    // check author exists
-    for (auto &pair : books) {
-        if (pair.first == b) {
-            for (const Book &book : pair.second) {
-                if (book.author == c) {
-                    author_exist = false;
-                    break;
-                }
-            }
-        }
-    }
-
-    if (author_exist) {
+    if (check_author_exists(books,b,c)) {
         cout << "Error: unknown author" << endl;
         return;
     }
@@ -327,6 +326,7 @@ void print_books(map<string, vector<Book>> books, string b, string c) {
                  << " on the shelf" << endl;
     }
 }
+
 void print_reservable(map<string, vector<Book>> books, string b, string c) {
     // reservable <author> <book_name>
     map<string, int> queue;
