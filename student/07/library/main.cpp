@@ -148,8 +148,13 @@ map<string, vector<Book>> read_books(string filename) {
     // check if the file can be opened
     if (!infile.is_open()) {
         // print out error warning if the file cannot be opened
-        throw invalid_argument("Input file cannot be opened");
+        throw invalid_argument("input file cannot be opened");
     }
+    if ( infile.peek() == std::ifstream::traits_type::eof() )
+    {
+        throw invalid_argument("empty field");
+    }
+
     string line;
     // access each line in the input file
     while (getline(infile, line)) {
