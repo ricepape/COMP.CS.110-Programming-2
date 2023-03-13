@@ -108,19 +108,23 @@ std::vector<std::string> split(const std::string &s, const char delimiter,
  * Return the struct Book containing the splitted input file contents into categories.
  * */
 Book parse_book(string line) {
-    stringstream ss(line);
-    string field;
-    vector<string> fields;
     //split parts of the line and assign into the vector fields.
-    while (getline(ss, field, ';')) {
-        fields.push_back(field);
-    }
+    vector<string> fields = split(line, ';');
+
     //Check if the number of elements of the vector, which comes from the
     //line in the file, is correct according to initial requirements, which is 4.
     if (fields.size() != 4) {
         //Print error as empty field
         throw invalid_argument("empty field");
     }
+
+    //Check if the elements in the vector are empty or not.
+    for (const auto& word : fields) {
+        if (word.empty()) {
+            throw invalid_argument("empty field");
+        }
+    }
+
     Book book;
     // Assign the splitted values of each line in the file data
     // into the Book elements
@@ -150,11 +154,10 @@ map<string, vector<Book>> read_books(string filename) {
         // print out error warning if the file cannot be opened
         throw invalid_argument("input file cannot be opened");
     }
-    if ( infile.peek() == std::ifstream::traits_type::eof() )
-    {
+    // check if the file is empty
+    if (infile.peek() == ifstream::traits_type::eof()) {
         throw invalid_argument("empty field");
     }
-
     string line;
     // access each line in the input file
     while (getline(infile, line)) {
@@ -207,7 +210,8 @@ bool sort_vector_by_title(const Book & a,
 /**
  * @Function print_material: print the books and their authors in a library given
  * by the user
- * @parameter: books, map<string, vector<Book>>: a map containing
+ * @parameter: books, map<string, vector<Book>>: a map containing the library name
+ * as the key, and
  * @parameter: condition, int: containing the number of the condition, which represents
  * the command of the user
  * @parameter: b, string:
@@ -235,17 +239,25 @@ void print_material(map<string, vector<Book>> books, string b) {
             // Using sort_vector_by_author function above
             // to sort the vector ascending
             sort(pair.second.begin(), pair.second.end(), sort_vector_by_author);
+            // print all the books and authors in the library
             for (const Book &book : pair.second) {
                 cout << book.author << ": " << book.title << endl;
             }
         }
-        // cout << b << endl;
-        // cout << book.author << " " << book.library << " " << book.title << "
-        // "<< book.reservations <<endl;
     }
     return;
 }
-// inherited from if condition == 1 in print_book
+
+
+
+/**
+ * @Function print_libraries: print all the libraries in the input file
+ * @parameter: books, map<string, vector<Book>>: a map containing
+ * @parameter: condition, int: containing the number of the condition, which represents
+ * the command of the user
+ * @parameter: b, string:
+ *
+ * */
 void print_libraries(map<string, vector<Book>> books) {
     // libraries
     for (auto &pair : books) {
@@ -254,7 +266,6 @@ void print_libraries(map<string, vector<Book>> books) {
     return;
 }
 
-// inherited from if condition == 2 in print_book
 
 void print_books(map<string, vector<Book>> books, string b, string c) {
     // books <library> <author>
@@ -316,7 +327,6 @@ void print_books(map<string, vector<Book>> books, string b, string c) {
                  << " on the shelf" << endl;
     }
 }
-// inherited from if condition == 3 in print_book
 void print_reservable(map<string, vector<Book>> books, string b, string c) {
     // reservable <author> <book_name>
     map<string, int> queue;
@@ -358,7 +368,6 @@ void print_reservable(map<string, vector<Book>> books, string b, string c) {
     }
     return;
 }
-// inherited from if condition == 4 in print_book
 void print_loanable(map<string, vector<Book>> books) {
     map<string, vector<string>> list;
     for (auto &pair : books) {
