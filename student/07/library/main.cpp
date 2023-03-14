@@ -424,6 +424,54 @@ void print_reservable(map<string, vector<Book>> books, string author_name,
 }
 
 /**
+ * @Function print_loanable: prints the authors and titles of all those books
+ * in all the libraries that can be found from the shelf.
+ * @parameter: books, map<string, vector<Book>>: a map containing the library
+ * name as the key, and the struct Book as its elements The function prints a
+ * single list, where the books are in alphabetical order first based on authors
+ * and then based on titles. Moreover, each book is included only once, although
+ * it could be found in several libraries.
+ * */
+void print_loanable(map<string, vector<Book>> books) {
+    // Create a map variable for later use
+    map<string, vector<string>> list;
+
+    for (auto &pair : books) {
+        // Getting the elements, which is the struct Book, from the maps
+        for (const Book &book : pair.second) {
+            // Check if the key (library) is in the map
+            if (list.find(pair.first) == list.end() && book.reservations == 0) {
+                // add the library and a vector of string to store the list of
+                // books later
+                vector<string> list_of_books;
+                list.insert({pair.first, list_of_books});
+                list[book.author].push_back(book.title);
+            } else {
+                // The case that there's the key (library) in the map,
+                // find the key
+                if ((std::find(list[book.author].begin(),
+                               list[book.author].end(), book.title)) ==
+                        list[book.author].end() &&
+                    // add the name of the book to the vector containing lists
+                    // of books
+                    book.reservations == 0) {
+                    list[book.author].push_back(book.title);
+                }
+            }
+        }
+    }
+    for (auto &author : list) {
+        // Sort the author names in an alphabetical order
+        sort(author.second.begin(), author.second.end());
+        for (auto &title : author.second) {
+            // Print out all the founded books and authors
+            cout << author.first << ": " << title << endl;
+        }
+    }
+    return;
+}
+
+/**
  * @Function check_command: the function serves at the interfaces of the
  * program, where it receives the command from the user, and analyse the
  * command.
