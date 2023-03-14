@@ -347,6 +347,83 @@ void print_books(map<string, vector<Book>> books, string library_name,
 }
 
 /**
+ * @Function print_reservable: print the reservation of the book and the
+ * libraries they are stored in which the book name and the book's author is
+ * given by the user
+ * @parameter: books, map<string, vector<Book>>: a map containing the library
+ * name as the key, and the struct Book as its elements
+ * @parameter: author_name, string: containing the name of the author needs to
+ * be search, given by the user
+ * @parameter: title_book, string: containing the name of the title of the book
+ * needs to be search, given by the user
+ * The function follows the command "reservable <author> <book_name>" to print
+ * the reservations and the libraries.
+ * */
+void print_reservable(map<string, vector<Book>> books, string author_name,
+                      string title_book) {
+    // Create a map and a vector of strings variable for later use
+    map<string, int> queue;
+    vector<string> minlist;
+
+    for (auto &pair : books) {
+        // Run through the vector of Books, elements in each map.
+        for (const Book &book : pair.second) {
+            // Check if there is the book with the author in the initial data
+            if (book.author == author_name && book.title == title_book) {
+                // If yes, assign the library that contains the book and
+                // its reservation in to map variable queue.
+                queue.insert({pair.first, book.reservations});
+            }
+        }
+    }
+
+    // After checking all the books in all the libraries, we check if is there
+    // any books stored into "queue"
+    // If there's nothing stored, it means that there's no such book in the
+    // initial data
+    if (queue.size() == 0) {
+        cout << "Book is not a library book" << endl;
+        return;
+    }
+    // If there's data in "queue", we find the smallest reservations in all the
+    // libraries that contain the book.
+    // Initializes an iterator min_iter that points to the element
+    // with the smallest value in the "queue" map
+    // The code returns the smallest value of reservation.
+    auto min_iter = std::min_element(
+        queue.begin(), queue.end(),
+        // Compared all the elements in the "queue"
+        [](const auto &a, const auto &b) { return a.second < b.second; });
+    // Create a loop through each element in the "queue" map.
+    // Inside the loop, the code checks if the number of reservations of the
+    // current element is equal to the minimum number of reservations found
+    // earlier
+    for (auto iter = queue.begin(); iter != queue.end(); ++iter) {
+        if (iter->second == min_iter->second) {
+            minlist.push_back(iter->first);
+        }
+    }
+    // In case the smallest reservable value is 0, the status is "on the shelf"
+    if (min_iter->second == 0)
+        cout << "on the shelf" << endl;
+    // In case the smallest reservable value is between 0 and 100,
+    // return the numeric value
+    else if (min_iter->second > 0 && min_iter->second < 100)
+        cout << min_iter->second << " reservations" << endl;
+    // In case the smallest reservable value is larger than 100 or less than 0,
+    // the book is not reservable.
+    else {
+        cout << "Book is not reservable from any library" << endl;
+        return;
+    }
+    // Print out all the libraries containing the corresponding book.
+    for (auto &pair : minlist) {
+        cout << "--- " << pair << endl;
+    }
+    return;
+}
+
+/**
  * @Function check_command: the function serves at the interfaces of the
  * program, where it receives the command from the user, and analyse the
  * command.
