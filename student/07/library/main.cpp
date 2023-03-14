@@ -183,15 +183,98 @@ map<string, vector<Book>> read_books(string filename) {
 }
 
 /**
- * @Function check_command: the function serves at the interfaces of the
- * program, where it receives the command from the user, and analyse the
- * command.
- * @parameter: books, map<string, vector<Book>>: a map containing the library
- * name as the key, and the struct Book as its elements The function returns the
- * results according to the command of the user. In case there is an unknown
- * command, the function prints an error warning. The function quits when the
- * user put in the "quit" command, and quit the whole program.
+ * @Function check_library_exists: check if the library given by the user
+ * is in the initial data
+ * @parameter: a,b, iterator of Book struct: containing two Book struct that the
+ * title field needs to be compared. It goes through every element in the map.
+ *
  * */
+bool check_library_exists(map<string, vector<Book>> books,
+                          string library_name) {
+    // Denote a flag for the existance of the library given by user
+    bool library_exist = true;
+    // Check if the library exists
+    for (auto &pair : books) {
+        if (pair.first == library_name) {
+            // If there exists the library, the flag would be denoted as false
+            library_exist = false;
+            break;
+        }
+    }
+    return library_exist;
+}
+
+bool check_author_exists(map<string, vector<Book>> books, string library_name,
+                         string author_name) {
+    // Denote a flag for the existance of the author in the library,
+    // both given by user
+    bool author_exist = true;
+    // Check if the author exists
+    for (auto &pair : books) {
+        // Get the element from the key, which is the library's name.
+        if (pair.first == library_name) {
+            for (const Book &book : pair.second) {
+                if (book.author == author_name) {
+                    // If there exists the author, the flag would be denoted as
+                    // false
+                    author_exist = false;
+                    break;
+                }
+            }
+        }
+    }
+    return author_exist;
+}
+
+/**
+ * @Function print_material: print the books and their authors in a library
+ * given by the user
+ * @parameter: books, map<string, vector<Book>>: a map containing the library
+ * name as the key, and the struct Book as its elements
+ * @parameter: library_name, string: containing the name of the library
+ * The function follows the command "material <library>" to print the books and
+ * authors. Error warnings are given in cases there is error in the name of the
+ * library.
+ * */
+void print_material(map<string, vector<Book>> books, string library_name) {
+
+    // If the flag stays being true, then the library does not exists in the
+    // file
+    if (check_library_exists(books, library_name)) {
+        // Print error warning
+        cout << "Error: unknown library" << endl;
+        return;
+    }
+    for (auto &pair : books) {
+        if (pair.first == library_name) {
+            // sort the vector by the author's name
+            sort(pair.second.begin(), pair.second.end(),
+                 [](const Book &a, const Book &b) {
+                     return a.author < b.author;
+                 });
+            // print all the books and authors in the library
+            for (const Book &book : pair.second) {
+                cout << book.author << ": " << book.title << endl;
+            }
+        }
+    }
+    return;
+}
+
+/**
+ * @Function print_libraries: print all the libraries in the input file
+ * @parameter: books, map<string, vector<Book>>: a map containing the library
+ * name as the key, and the struct Book as its elements
+ * */
+void print_libraries(map<string, vector<Book>> books) {
+    // Getting all the libraries in the initial data, which is all the keys in
+    // the map created.
+    for (auto &pair : books) {
+        cout << pair.first << endl;
+    }
+    return;
+}
+
 int check_command(map<string, vector<Book>> books) {
     while (true) {
         string command;
