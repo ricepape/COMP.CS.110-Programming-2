@@ -73,15 +73,15 @@ struct Book {
  * @parameter: ignore_empty, bool: denoted as a flag to skip adding empty parts.
  * Return a vector of splitted contents
  **/
-std::vector<std::string> split(const std::string &s, const char delimiter,
+vector<string> split(const string &s, const char delimiter,
                                bool ignore_empty = false) {
-    std::vector<std::string> result;
-    std::string tmp = s;
+    vector<string> result;
+    string tmp = s;
     // create the loop to find the delimiter in the string
-    while (tmp.find(delimiter) != std::string::npos) {
+    while (tmp.find(delimiter) != string::npos) {
         // assign the content seperated by the delimeter, from the start to the
         // point the delimiter into another parameter.
-        std::string new_part = tmp.substr(0, tmp.find(delimiter));
+        string new_part = tmp.substr(0, tmp.find(delimiter));
         // delete the assigned part in the main string content
         tmp = tmp.substr(tmp.find(delimiter) + 1, tmp.size());
         // check if the new_part is empty
@@ -391,7 +391,7 @@ void print_reservable(map<string, vector<Book>> books, string author_name,
     // Initializes an iterator min_iter that points to the element
     // with the smallest value in the "queue" map
     // The code returns the smallest value of reservation.
-    auto min_iter = std::min_element(
+    auto min_iter = min_element(
         queue.begin(), queue.end(),
         // Compared all the elements in the "queue"
         [](const auto &a, const auto &b) { return a.second < b.second; });
@@ -450,7 +450,7 @@ void print_loanable(map<string, vector<Book>> books) {
             } else {
                 // The case that there's the key (library) in the map,
                 // find the key
-                if ((std::find(list[book.author].begin(),
+                if ((find(list[book.author].begin(),
                                list[book.author].end(), book.title)) ==
                         list[book.author].end() &&
                     // add the name of the book to the vector containing lists
@@ -487,7 +487,7 @@ int check_command(map<string, vector<Book>> books) {
         string command;
         cout << "lib> ";
         // Getting the command from the user
-        getline(std::cin, command);
+        getline(cin, command);
         // Using split function to split the command
         vector<string> words = split(command, ' ');
         // Consider the cases of the command given
@@ -525,7 +525,7 @@ int check_command(map<string, vector<Book>> books) {
             // + "name of book". The name of book can be longer than 1 word
         } else if (words.size() >= 3 && words.at(0) == "reservable") {
             if (words.size() >= 3) {
-                std::string combined;
+                string combined;
                 // Combining all the words which is the name of the book
                 for (size_t i = 2; i < words.size(); ++i) {
                     combined += words[i] + " ";
@@ -534,13 +534,13 @@ int check_command(map<string, vector<Book>> books) {
                 // leaving only the first word.
                 combined.pop_back();
                 size_t pos = combined.find("\"");
-                while (pos != std::string::npos) {
+                while (pos != string::npos) {
                     combined.erase(pos, 1);
                     pos = combined.find("\"", pos);
                 }
                 // replace the first word with the whole and complete name
                 // of the book after combined.
-                std::replace(words.begin(), words.end(), words[2], combined);
+                replace(words.begin(), words.end(), words[2], combined);
             }
             print_reservable(books, words.at(1), words.at(2));
             // Command priting all the books are on the shelf in all the
