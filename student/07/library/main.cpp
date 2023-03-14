@@ -275,6 +275,87 @@ void print_libraries(map<string, vector<Book>> books) {
     return;
 }
 
+/**
+ * @Function print_books: print the books and their smallest reservation
+ * of a specific author in a library given by the user
+ * @parameter: books, map<string, vector<Book>>: a map containing the library
+ * name as the key, and the struct Book as its elements
+ * @parameter: library_name, string: containing the name of the library needs to
+ * be search, given by the user
+ * @parameter: author name, string: containing the name of the author needs to
+ * be search, given by the user The function follows the command "books
+ * <library> <author>" to print the books and its smallest reservation.
+ * Error warnings are given in cases there is error in the name of the library.
+ * */
+void print_books(map<string, vector<Book>> books, string library_name,
+                 string author_name) {
+    // Create a map variable for later use
+    map<string, int> book_title;
+
+    // Using the check_library_exists function to check if the library exists
+    // in the initial input data
+    // If the return value from the function being true, then the library
+    // does not exists in the file
+    if (check_library_exists(books, library_name)) {
+        // Print error warning
+        cout << "Error: unknown library" << endl;
+        return;
+    }
+    // Using the check_author_exists function to check if the author exists
+    // in the given library in the initial input data
+    // If the return value from the function being true, then the author
+    // does not exists in the library
+    if (check_author_exists(books, library_name, author_name)) {
+        cout << "Error: unknown author" << endl;
+        return;
+    }
+    for (auto &pair : books) {
+        // Count the occurence of book title in the library
+        if (pair.first == library_name) {
+            // Getting the struct Book from the key similar to the library name
+            for (const Book &book : pair.second) {
+                // Check the author elements in the map corresponding to the
+                // library
+                if (book.author == author_name) {
+                    // Check if there is the book in the assigned variable
+                    // book_title
+                    if (book_title.find(book.title) == book_title.end()) {
+                        // Assign the founded book and its reservation into
+                        // book_title
+                        book_title.insert({book.title, book.reservations});
+                    } else {
+                        // If there exists the book in book_title, the
+                        // reservations is added to the given one
+                        book_title[book.title] += book.reservations;
+                    }
+                }
+            }
+        }
+    }
+    // Print the book(s) correspond(s) to the given author and their
+    // reservations
+    for (auto &pair : book_title) {
+        if (pair.second > 0)
+            cout << pair.first << " --- " << pair.second << " reservations"
+                 << endl;
+        // If the reservation is 0, which means that it is not reserved and
+        // still on the shelf
+        else if (pair.second == 0)
+            cout << pair.first << " ---"
+                 << " on the shelf" << endl;
+    }
+}
+
+/**
+ * @Function check_command: the function serves at the interfaces of the
+ * program, where it receives the command from the user, and analyse the
+ * command.
+ * @parameter: books, map<string, vector<Book>>: a map containing the library
+ * name as the key, and the struct Book as its elements The function returns the
+ * results according to the command of the user. In case there is an unknown
+ * command, the function prints an error warning. The function quits when the
+ * user put in the "quit" command, and quit the whole program.
+ * */
 int check_command(map<string, vector<Book>> books) {
     while (true) {
         string command;
