@@ -86,7 +86,7 @@ std::vector<std::string> split(const std::string &s, const char delimiter,
         tmp = tmp.substr(tmp.find(delimiter) + 1, tmp.size());
         // check if the new_part is empty
         if (!(ignore_empty and new_part.empty())) {
-            // assign into the vector
+            // Assign the spliited part into the vector
             result.push_back(new_part);
         }
     }
@@ -121,6 +121,7 @@ Book parse_book(string line) {
     // Check if the elements in the vector are empty or not.
     for (const auto &word : fields) {
         if (word.empty()) {
+             // Print error as empty field
             throw invalid_argument("empty field");
         }
     }
@@ -491,9 +492,9 @@ int check_command(map<string, vector<Book>> books) {
         vector<string> words = split(command, ' ');
         // Consider the cases of the command given
         // If the command received is "quit"
-        //  There must be only 1 word "quit" in the command.
-        //  If there are any other words after that, the command is considered
-        //  as unknown.
+        // There must be only 1 word "quit" in the command.
+        // If there are any other words after that, the command is considered
+        // as unknown.
         if (words.at(0) == "quit" && words.size() == 1)
             // Exit the program successfully
             break;
