@@ -65,6 +65,81 @@ struct Book {
 };
 
 /**
+ * @Function split: split a line of content into parts with a delimiter.
+ * @parameter: s, string: containing the string content that needs to be
+ *splitted.
+ * @parameter: delimiter, const char: the delimiter that seperate contents in
+ * the line
+ * @parameter: ignore_empty, bool: denoted as a flag to skip adding empty parts.
+ * Return a vector of splitted contents
+ **/
+std::vector<std::string> split(const std::string &s, const char delimiter,
+                               bool ignore_empty = false) {
+    std::vector<std::string> result;
+    std::string tmp = s;
+    // create the loop to find the delimiter in the string
+    while (tmp.find(delimiter) != std::string::npos) {
+        // assign the content seperated by the delimeter, from the start to the
+        // point the delimiter into another parameter.
+        std::string new_part = tmp.substr(0, tmp.find(delimiter));
+        // delete the assigned part in the main string content
+        tmp = tmp.substr(tmp.find(delimiter) + 1, tmp.size());
+        // check if the new_part is empty
+        if (!(ignore_empty and new_part.empty())) {
+            // assign into the vector
+            result.push_back(new_part);
+        }
+    }
+    // After all the delimiters has been deleted in the string, check if there
+    // are any contents left in the string. If yes then add the remaining as an
+    // element into the string
+    if (!(ignore_empty and tmp.empty())) {
+        result.push_back(tmp);
+    }
+    return result;
+}
+
+/**
+ * @Function parse_book: parse a line containing different
+ * contents from the input file into a book struct.
+ * @parameter: line, string: Containing each row in the input file as a string.
+ * Return the struct Book containing the splitted input file contents into
+ * categories.
+ * */
+Book parse_book(string line) {
+    // split parts of the line and assign into the vector fields.
+    vector<string> fields = split(line, ';');
+
+    // Check if the number of elements of the vector, which comes from the
+    // line in the file, is correct according to initial requirements, which
+    // is 4.
+    if (fields.size() != 4) {
+        // Print error as empty field
+        throw invalid_argument("empty field");
+    }
+
+    // Check if the elements in the vector are empty or not.
+    for (const auto &word : fields) {
+        if (word.empty()) {
+            throw invalid_argument("empty field");
+        }
+    }
+
+    Book book;
+    // Assign the splitted values of each line in the file data
+    // into the Book elements
+    book.author = fields[1];
+    book.title = fields[2];
+    if (fields[3] == "on-the-shelf") {
+        book.reservations = 0;
+    } else {
+        // Turns the value from the file into integers, and assign it.
+        book.reservations = stoi(fields[3]);
+    }
+    return book;
+}
+
+/**
  * @Function read_books: read the input file and populate a vector of struct
  * Books
  * @parameter: filename, string: containing the name of the input file.
