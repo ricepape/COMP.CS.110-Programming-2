@@ -182,6 +182,87 @@ map<string, vector<Book>> read_books(string filename) {
     return books;
 }
 
+/**
+ * @Function check_command: the function serves at the interfaces of the
+ * program, where it receives the command from the user, and analyse the
+ * command.
+ * @parameter: books, map<string, vector<Book>>: a map containing the library
+ * name as the key, and the struct Book as its elements The function returns the
+ * results according to the command of the user. In case there is an unknown
+ * command, the function prints an error warning. The function quits when the
+ * user put in the "quit" command, and quit the whole program.
+ * */
+int check_command(map<string, vector<Book>> books) {
+    while (true) {
+        string command;
+        cout << "lib> ";
+        // Getting the command from the user
+        getline(std::cin, command);
+        // Using split function to split the command
+        vector<string> words = split(command, ' ');
+        // Consider the cases of the command given
+        // If the command received is "quit"
+        //  There must be only 1 word "quit" in the command.
+        //  If there are any other words after that, the command is considered
+        //  as unknown.
+        if (words.at(0) == "quit" && words.size() == 1)
+            // Exit the program successfully
+            break;
+        // Command printing all the libraries
+        else if (command == "libraries") {
+            print_libraries(books);
+            // Command priting all the books in the input library
+            // There must be 2 words in the command: material + "name of
+            // library" If there are any other words after that or words are
+            // missing, the command is considered as unknown.
+        } else if (words.size() == 2 && words.at(0) == "material") {
+            print_material(books, words.at(1));
+            // Command priting all the books of an author in a library, both
+            // input by the user There must be only 3 words in the command:
+            // books + "name of library"
+            // + "name of author"
+            // If there are any other words after that or words are missing, the
+            // command is considered as unknown.
+        } else if (words.at(0) == "books") {
+            if (words.size() == 3)
+                print_books(books, words.at(1), words.at(2));
+            else
+                cout << "Error: wrong number of parameters" << endl;
+            // Command priting the reservation of a book and all the libraries
+            // contains the books, which the name of the book and the name of
+            // the author is given by the user There must be at least 3 words in
+            // the command: reservable + "name of author"
+            // + "name of book". The name of book can be longer than 1 word
+        } else if (words.size() >= 3 && words.at(0) == "reservable") {
+            if (words.size() >= 3) {
+                std::string combined;
+                // Combining all the words which is the name of the book
+                for (size_t i = 2; i < words.size(); ++i) {
+                    combined += words[i] + " ";
+                }
+                // Delete the seperated words which is the name of the book,
+                // leaving only the first word.
+                combined.pop_back();
+                size_t pos = combined.find("\"");
+                while (pos != std::string::npos) {
+                    combined.erase(pos, 1);
+                    pos = combined.find("\"", pos);
+                }
+                // replace the first word with the whole and complete name
+                // of the book after combined.
+                std::replace(words.begin(), words.end(), words[2], combined);
+            }
+            print_reservable(books, words.at(1), words.at(2));
+            // Command priting all the books are on the shelf in all the
+            // libraries.
+        } else if (words.size() == 1 && words.at(0) == "loanable") {
+            print_loanable(books);
+        } else
+            cout << "Error: unknown command" << endl;
+    }
+    return EXIT_SUCCESS;
+}
+
 // Define the main function
 int main() {
     cout << "Input file: ";
