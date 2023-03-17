@@ -145,7 +145,7 @@ int main() {
                 continue;
             } else {
                 bool is_student_number_exists = false;
-                for(auto &pair: student_numbers){
+                for(auto pair: student_numbers){
                     if (parts.at(1) == pair.first){
                             is_student_number_exists = true;
                             std::cout << "Enter a new phone number: ";
