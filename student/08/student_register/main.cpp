@@ -142,7 +142,6 @@ int main() {
         } else if(command == "C" or command == "c") {
             if(parts.size() != 2){
                 std::cout << "Erroneous parameters!" << std::endl << HELP_TEXT;
-
                 continue;
             } else {
                 bool is_student_number_exists = false;
@@ -163,11 +162,15 @@ int main() {
                    std::cout <<"There is no student with the given number!" <<std::endl << std::endl;
                    continue;
                     }
-                 }
-
-
-
-
+                std::fstream file;
+                file.open(file_name);
+                for(auto &pair: user_ids){
+                    file << (pair.second)->student_number << ";" << (pair.second)->user_id << ";" << (pair.second)-> name
+                         << ";" << (pair.second)->phone_number << ";" << (pair.second)->email << ";"
+                         << (pair.second)->skype << std::endl;
+                }
+                file.close();
+}
 
 
 
