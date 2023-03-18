@@ -6,25 +6,28 @@ Cards::Cards(): top_(nullptr) {
 }
 
 void Cards::print_from_top_to_bottom(std::ostream& s){
-    int running_number = 1;
-        for (Card_data* item_to_be_printed = top_; item_to_be_printed != nullptr;
-             item_to_be_printed= item_to_be_printed->next) {
-            s << running_number << ". " << item_to_be_printed->data << std::endl;
-            ++running_number;
-        }
-    }
+    if (top_!=nullptr){
+       Card_data* item_to_be_printed = top_;
+       int running_number = 1;
 
+       while ( item_to_be_printed != nullptr ) {
+          s << running_number << ". " << item_to_be_printed->data << std::endl;
+          ++running_number;
+          item_to_be_printed = item_to_be_printed->next;
+   }}
+}
 
 void Cards::print_from_bottom_to_top(std::ostream& s){
-    int running_number = 1;
+    if (top_!=nullptr){
+       Card_data* item_to_be_printed = top_;
+       int running_number = 1;
 
-        for (Card_data* item_to_be_printed = top_; item_to_be_printed != nullptr;
-             item_to_be_printed= item_to_be_printed->next) {
-            s << running_number << ". " << item_to_be_printed->data << std::endl;
-            ++running_number;
-        }
-
-    }
+       while ( item_to_be_printed != nullptr ) {
+          s << running_number << ". " << item_to_be_printed->data << std::endl;
+          ++running_number;
+          item_to_be_printed = item_to_be_printed->next;
+   }}
+}
 
 bool Cards::bottom_to_top(){
    return true;
