@@ -74,3 +74,7 @@ bool Cards::remove(int& id){
 
     return true;
 }
+
+Card_data* Cards::get_topmost(){
+    return top_;
+}
