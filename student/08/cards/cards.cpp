@@ -14,12 +14,6 @@ void Cards::print_from_top_to_bottom(std::ostream& s){
         }
     }
 
-int Cards::recursive_print(Card_data* top, std::ostream& s){
-
-}
-
-
-
 
 void Cards::print_from_bottom_to_top(std::ostream& s){
     int running_number = 1;
