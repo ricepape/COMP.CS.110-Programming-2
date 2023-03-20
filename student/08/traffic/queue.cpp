@@ -79,13 +79,13 @@ void Queue::print() const{
             Vehicle* vehicles_to_be_printed = first_;
             int running_number = 0;
             int cycle=cycle_;
-            cout << "GREEN: Vehicles(s) ";
+            cout << "GREEN: Vehicle(s) ";
             while (vehicles_to_be_printed !=nullptr && running_number < cycle ) {
                cout << vehicles_to_be_printed ->reg_num <<" ";
                ++running_number;
                vehicles_to_be_printed = vehicles_to_be_printed->next;
             }
-            cout << "can go on" << endl << endl;
+            cout << "can go on" << endl;
          } else
         cout <<"GREEN: No vehicles waiting in traffic lights"<< endl;
     } else {
@@ -96,7 +96,7 @@ void Queue::print() const{
                cout << vehicles_to_be_printed ->reg_num <<" ";
                vehicles_to_be_printed = vehicles_to_be_printed->next;
             }
-            cout << "waiting in traffic lights" << endl << endl;
+            cout << "waiting in traffic lights" << endl;
         } else
         cout <<"RED: No vehicles waiting in traffic lights"<< endl;
     }
