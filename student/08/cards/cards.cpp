@@ -1,6 +1,5 @@
 #include "cards.hh"
 #include <iostream>
-#include <stack>
 
 // TODO: Implement the methods here
 Cards::Cards(): top_(nullptr) {
