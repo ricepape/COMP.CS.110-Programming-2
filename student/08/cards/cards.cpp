@@ -11,7 +11,7 @@ void Cards::print_from_top_to_bottom(std::ostream& s){
        int running_number = 1;
 
        while ( item_to_be_printed != nullptr ) {
-          s << running_number << ". " << item_to_be_printed->data << std::endl;
+          s << running_number << ": " << item_to_be_printed->data << std::endl;
           ++running_number;
           item_to_be_printed = item_to_be_printed->next;
    }}
@@ -34,7 +34,7 @@ void Cards::print_from_bottom_to_top(std::ostream& s){
             item_to_be_printed = item_to_be_printed->next;
         }
 
-        s << t << ". " << item_to_be_printed->data << std::endl;
+        s << t << ": " << item_to_be_printed->data << std::endl;
         t+=1;
     }
 }
