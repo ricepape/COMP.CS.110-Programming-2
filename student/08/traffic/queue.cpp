@@ -91,7 +91,7 @@ void Queue::print() const{
     } else {
         if(first_!=nullptr){
             Vehicle* vehicles_to_be_printed = first_;
-            cout << "RED: Vehicles(s) ";
+            cout << "RED: Vehicle(s) ";
             while (vehicles_to_be_printed !=nullptr) {
                cout << vehicles_to_be_printed ->reg_num <<" ";
                vehicles_to_be_printed = vehicles_to_be_printed->next;
