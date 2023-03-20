@@ -43,16 +43,20 @@ void Cards::print_from_bottom_to_top(std::ostream& s){
 bool Cards::bottom_to_top() {
     if (top_ != nullptr && top_->next != nullptr) {
         Card_data* last_item = top_;
+        Card_data* second_last_item = nullptr;
 
         while (last_item->next != nullptr) {
+            second_last_item = last_item;
             last_item = last_item->next;
         }
 
+        if (second_last_item != nullptr) {
+            second_last_item->next = nullptr;
+        }
+
         last_item->next = top_;
+        top_ = last_item;
 
-        top_ = last_item->next;
-
-        last_item->next = nullptr;
         return true;
     } else {
         return false;
@@ -60,21 +64,28 @@ bool Cards::bottom_to_top() {
 
 bool Cards::top_to_bottom(){
     if (top_ != nullptr && top_->next != nullptr) {
+        Card_data* first_item = top_;
+        Card_data* second_item = top_->next;
         Card_data* last_item = top_;
 
         while (last_item->next != nullptr) {
             last_item = last_item->next;
         }
 
-        last_item->next = top_;
+        // Move the first item to the last position
+        last_item->next = first_item;
 
-        top_ = last_item->next;
+        // Shift all other items to the left by one position
+        top_ = second_item;
+        last_item->next->next = nullptr;
 
-        last_item->next = nullptr;
         return true;
     } else {
         return false;
     }}
+
+
+
 
 void Cards::add(int id){
     if (top_ == nullptr) {
