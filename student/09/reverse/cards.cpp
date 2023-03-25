@@ -24,8 +24,38 @@ void Cards::print(std::ostream& s) {
    }
 }
 
-// Tip for writing code more efficiently:
-// Do not write the stubs of the methods remove and reverse by yourself here,
-// but open the file cards.hh and click the declaration of the method
-// by the right mouse button and select
-// Refactor > Add definition in cards.cpp
+bool Cards::remove(int &id){
+    if (top_ == nullptr) {
+        return false;
+    }
+    std::shared_ptr<Card_data> item_to_be_removed = top_;
+    id+=1;
+    id = item_to_be_removed->data;
+    if (top_ == top_->next) {
+        top_ = nullptr;
+    } else {
+        top_ = top_->next;
+    }
+    return true;
+}
+
+
+
+void Cards::reverse()
+{if (top_ != nullptr && top_->next != nullptr) {
+        std::shared_ptr<Card_data> prev_item = nullptr;
+        std::shared_ptr<Card_data> curr_item = top_;
+        std::shared_ptr<Card_data> next_item = nullptr;
+
+        while (curr_item != nullptr) {
+            next_item = curr_item->next;
+            curr_item->next = prev_item;
+            prev_item = curr_item;
+            curr_item = next_item;
+        }
+        top_ = prev_item;
+    }
+
+}
+
+
