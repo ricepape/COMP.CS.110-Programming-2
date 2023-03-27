@@ -14,7 +14,7 @@ int greatest_v2(int *itemptr, int *endptr)
 {
     int max = 0;
     while (itemptr < endptr){
-        if (*itemptr >= max){
+        if (*itemptr >= max & *itemptr!=0){
             max=*itemptr;
         }
         ++itemptr;
