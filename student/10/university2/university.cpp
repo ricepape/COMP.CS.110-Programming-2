@@ -137,25 +137,21 @@ void University::sign_up(Params params)
         std::cout << CANT_FIND << account << std::endl;
         return;
     }
-    Course* chosen_course =  courses_.at(code);
-    Account* chosen_account = accounts_.at(account);
-
+    Course* chosen_course =  courses_[code];
+    Account* chosen_account = accounts_[account];
+    if (chosen_account->get_graduated() == true){
+        std::cout << ALREADY_GRADUATED << std::endl;
+        return;
+    }
+    if (chosen_account->is_course_completed(code)){
+            std::cout << STUDENT_COMPLETED << std::endl;
+            return;
+        }
     if (chosen_course->is_student_exists(account)){
             std::cout << STUDENT_EXISTS << std::endl;
             return;
         }
 
-    std::vector<std::string> list_courses = chosen_account->get_completed_courses();
-    if (chosen_account->get_graduated() == true){
-        std::cout << ALREADY_GRADUATED << std::endl;
-        return;
-    }
-    for (auto & element: list_courses){
-        if (element == code){
-            std::cout << STUDENT_COMPLETED << std::endl;
-            return;
-        }
-    }
     chosen_course->add_student(account);
     std::cout << SIGNED_UP << std::endl;
 }
@@ -169,35 +165,62 @@ void University::complete(Params params)
         std::cout << CANT_FIND << code << std::endl;
         return;
     }
-    if ( accounts_.find(account) == accounts_.end() )
+    if ( accounts_.find(account) == accounts_.end())
     {
         std::cout << CANT_FIND << account << std::endl;
         return;
     }
     Course* chosen_course =  courses_[code];
     Account* chosen_account = accounts_[account];
-
-
-
+    if (not chosen_course->is_student_exists(account)){
+            std::cout << NO_SIGNUPS << std::endl;
+            return;
+        }
+    chosen_account->add_course(code);
+    chosen_course->delete_student(account);
+    std::cout << COMPLETED << std::endl;
 }
 
 
 void University::print_signups(Params params)
 {
+    Course* chosen_course =  courses_[params.at(0)];
+    for (auto& element: chosen_course->vector_students()){
+        std::cout << element << ": "<< accounts_[element]->get_full_name()
+                  << ", " << accounts_[element]->get_email() << std::endl;
+    }
 
 }
 
 void University::print_completed(Params params)
 {
+    Account* chosen_account = accounts_[std::stoi(params.at(0))];
+    int total_credits=0;
+    for (auto& element: chosen_account->vector_courses()){
+        courses_.at(element)->print_long_info();
+        total_credits+=courses_.at(element)->get_credits();
+    }
+    std::cout<<"Total credits: "<< total_credits <<std::endl;
 
 }
 
 void University::print_study_state(Params params)
 {
-
+    int student_number= std::stoi(params.at(0));
+    std::cout << "Current:" << std::endl;
+    for ( auto course : courses_ ){
+        if (course.second->is_student_exists(student_number)){
+            course.second->print_info(true);
+        }
+    }
+    std::cout << "Completed:" << std::endl;
+    print_completed(params);
 }
+
 
 void University::graduate(Params params)
 {
-
+    Account* chosen_account = accounts_[std::stoi(params.at(0))];
+    chosen_account->graduation();
+    std::cout << GRADUATED << std::endl;
 }

@@ -61,9 +61,17 @@ public:
      */
     int get_account_number() const;
 
-    std::vector<std::string> get_completed_courses();
+    bool is_course_completed(const std::string& course_to_be_checked);
 
     bool get_graduated();
+
+    void add_course(const std::string& course_to_be_added);
+
+    void sort();
+
+    std::vector<std::string> vector_courses();
+
+    void graduation();
 
 private:
     std::string full_name_;
@@ -73,7 +81,13 @@ private:
     const int account_number_;
     bool graduated = false;
 
-    std::vector<std::string> completed_courses_;
+    struct List_completed_courses{
+        std::string courses_completed;
+        List_completed_courses* next;
+    };
+
+    List_completed_courses* first_ =nullptr;
+    List_completed_courses* last_ = nullptr;
 
 
     // Most probably you will need here an attribute (e.g. vector) containing 

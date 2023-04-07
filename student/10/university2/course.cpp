@@ -78,18 +78,62 @@ bool Course::is_student_exists(const int &student_to_be_checked)
 {
     List_students* student_lists= first_;
     while ( student_lists != nullptr ) {
-      if (student_lists->students_signed_up != student_to_be_checked){
-          student_lists = student_lists->next;
-      }
-      else {
+      if (student_lists->students_signed_up == student_to_be_checked){
           return true;
       }
+      else student_lists = student_lists->next;
     }
     return false;
- }
+}
+
+void Course::delete_student(const int &student_to_be_deleted)
+{
+    List_students* student_lists= first_;
+    while ( student_lists != nullptr ) {
+        if (student_lists->students_signed_up == student_to_be_deleted){
+            first_ = first_->next;
+            return;
+    }
+        else student_lists = student_lists->next;
+    }
+    return;
+}
+
+
+void Course::sort() {
+    bool swapped = true;
+    List_students* ptr1 = nullptr;
+    List_students* lptr = nullptr;
+
+    if (first_ == nullptr)
+        return;
+
+    while (swapped) {
+        swapped = false;
+        ptr1 = first_;
+        while (ptr1->next != lptr) {
+            if (ptr1->students_signed_up > ptr1->next->students_signed_up) {
+                int temp = ptr1->students_signed_up;
+                ptr1->students_signed_up = ptr1->next->students_signed_up;
+                ptr1->next->students_signed_up = temp;
+                swapped = true;
+            }
+            ptr1 = ptr1->next;
+        }
+        lptr = ptr1;
+    }
+}
 
 
 
-
-
-
+std::vector<int> Course::vector_students()
+{
+    sort();
+    std::vector<int> students;
+    List_students* student_lists= first_;
+    while ( student_lists != nullptr ) {
+        students.push_back(student_lists->students_signed_up);
+        student_lists=student_lists->next;
+    }
+    return students;
+}

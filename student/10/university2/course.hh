@@ -78,8 +78,14 @@ public:
     int get_credits() const;
 
     void add_student(const int& student_to_be_added);
-    struct List_students return_list();
+
     bool is_student_exists(const int& student_to_be_checked);
+
+    void delete_student(const int& student_to_be_deleted);
+
+    std::vector<int> vector_students();
+
+    void sort();
 
 
 private:
@@ -88,15 +94,15 @@ private:
     int credits_;
     std::vector<Account*> course_staff_;
 
-    // Possibly (but not necessarily) you will need here an attibute
+    // Possibly (but not necessarily) you will need here an attribute
     // (e.g. vector) containing students signed up for the course
     struct List_students{
         int students_signed_up;
         List_students* next;
     };
 
-    List_students* first_;
-    List_students* last_;
+    List_students* first_ =nullptr;
+    List_students* last_ = nullptr;
 };
 
 #endif // COURSE_HH
