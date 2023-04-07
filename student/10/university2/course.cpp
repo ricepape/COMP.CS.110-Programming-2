@@ -1,6 +1,6 @@
 #include "course.hh"
 #include <iostream>
-#include <memory>
+
 
 Course::Course(const std::string& code, const std::string& name, int credits):
     course_code_(code), name_(name), credits_(credits)
@@ -62,7 +62,7 @@ int Course::get_credits() const
     return credits_;
 }
 
-void Course::add_student(const int &student_to_be_added) {
+void Course::add_student(const unsigned long int &student_to_be_added) {
    List_students* new_item = new List_students{student_to_be_added, nullptr};
 
    if ( first_ == nullptr ) {
@@ -74,7 +74,7 @@ void Course::add_student(const int &student_to_be_added) {
    }
 }
 
-bool Course::is_student_exists(const int &student_to_be_checked)
+bool Course::is_student_exists(const unsigned long int &student_to_be_checked)
 {
     List_students* student_lists= first_;
     while ( student_lists != nullptr ) {
@@ -86,7 +86,7 @@ bool Course::is_student_exists(const int &student_to_be_checked)
     return false;
 }
 
-void Course::delete_student(const int &student_to_be_deleted)
+void Course::delete_student(const unsigned long int &student_to_be_deleted)
 {
     List_students* student_lists= first_;
     while ( student_lists != nullptr ) {
@@ -113,7 +113,7 @@ void Course::sort() {
         ptr1 = first_;
         while (ptr1->next != lptr) {
             if (ptr1->students_signed_up > ptr1->next->students_signed_up) {
-                int temp = ptr1->students_signed_up;
+                unsigned long int temp = ptr1->students_signed_up;
                 ptr1->students_signed_up = ptr1->next->students_signed_up;
                 ptr1->next->students_signed_up = temp;
                 swapped = true;
@@ -126,10 +126,10 @@ void Course::sort() {
 
 
 
-std::vector<int> Course::vector_students()
+std::vector<unsigned long int> Course::vector_students()
 {
     sort();
-    std::vector<int> students;
+    std::vector<unsigned long int> students;
     List_students* student_lists= first_;
     while ( student_lists != nullptr ) {
         students.push_back(student_lists->students_signed_up);

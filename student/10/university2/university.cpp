@@ -126,7 +126,7 @@ void University::add_staff(Params params)
 void University::sign_up(Params params)
 {
     std::string code = params.at(0);
-    int account = std::stoi(params.at(1));
+    unsigned long int account = std::stoi(params.at(1));
     if ( courses_.find(code) == courses_.end() )
     {
         std::cout << CANT_FIND << code << std::endl;
@@ -206,7 +206,7 @@ void University::print_completed(Params params)
 
 void University::print_study_state(Params params)
 {
-    int student_number= std::stoi(params.at(0));
+    unsigned long int student_number= std::stoi(params.at(0));
     std::cout << "Current:" << std::endl;
     for ( auto course : courses_ ){
         if (course.second->is_student_exists(student_number)){
@@ -220,7 +220,13 @@ void University::print_study_state(Params params)
 
 void University::graduate(Params params)
 {
-    Account* chosen_account = accounts_[std::stoi(params.at(0))];
+    unsigned long int student_number= std::stoi(params.at(0));
+    Account* chosen_account = accounts_[student_number];
     chosen_account->graduation();
+    for ( auto course : courses_ ){
+        if (course.second->is_student_exists(student_number)){
+            course.second->delete_student(student_number);
+        }
+    }
     std::cout << GRADUATED << std::endl;
 }

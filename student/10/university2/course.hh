@@ -13,7 +13,6 @@
 #include "account.hh"
 #include <string>
 #include <vector>
-#include <memory>
 
 //const std::string STUDENT_ADDED = "A new student has been added.";
 const std::string STAFF_ADDED = "A new staff member has been added.";
@@ -77,13 +76,13 @@ public:
      */
     int get_credits() const;
 
-    void add_student(const int& student_to_be_added);
+    void add_student(const unsigned long int& student_to_be_added);
 
-    bool is_student_exists(const int& student_to_be_checked);
+    bool is_student_exists(const unsigned long int& student_to_be_checked);
 
-    void delete_student(const int& student_to_be_deleted);
+    void delete_student(const unsigned long int& student_to_be_deleted);
 
-    std::vector<int> vector_students();
+    std::vector<unsigned long int> vector_students();
 
     void sort();
 
@@ -97,7 +96,7 @@ private:
     // Possibly (but not necessarily) you will need here an attribute
     // (e.g. vector) containing students signed up for the course
     struct List_students{
-        int students_signed_up;
+        unsigned long int students_signed_up;
         List_students* next;
     };
 
