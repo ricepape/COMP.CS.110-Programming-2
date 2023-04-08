@@ -185,6 +185,12 @@ void University::complete(Params params)
 void University::print_signups(Params params)
 {
     Course* chosen_course =  courses_[params.at(0)];
+
+    if ( accounts_.find(std::stoi(params.at(0))) == accounts_.end() )
+    {
+        std::cout << CANT_FIND << params.at(0) << std::endl;
+        return;
+    }
     for (auto& element: chosen_course->vector_students()){
         std::cout << element << ": "<< accounts_[element]->get_full_name()
                   << ", " << accounts_[element]->get_email() << std::endl;
@@ -194,6 +200,11 @@ void University::print_signups(Params params)
 
 void University::print_completed(Params params)
 {
+    if ( accounts_.find(std::stoi(params.at(0))) == accounts_.end() )
+    {
+        std::cout << CANT_FIND << params.at(0) << std::endl;
+        return;
+    }
     Account* chosen_account = accounts_[std::stoi(params.at(0))];
     int total_credits=0;
     for (auto& element: chosen_account->vector_courses()){
@@ -206,10 +217,15 @@ void University::print_completed(Params params)
 
 void University::print_study_state(Params params)
 {
-    unsigned long int student_number= std::stoi(params.at(0));
+    unsigned long int account= std::stoi(params.at(0));
+    if ( accounts_.find(account) == accounts_.end() )
+    {
+        std::cout << CANT_FIND << account << std::endl;
+        return;
+    }
     std::cout << "Current:" << std::endl;
     for ( auto course : courses_ ){
-        if (course.second->is_student_exists(student_number)){
+        if (course.second->is_student_exists(account)){
             course.second->print_info(true);
         }
     }
@@ -220,6 +236,11 @@ void University::print_study_state(Params params)
 
 void University::graduate(Params params)
 {
+    if ( accounts_.find(std::stoi(params.at(0))) == accounts_.end() )
+    {
+        std::cout << CANT_FIND << params.at(0) << std::endl;
+        return;
+    }
     unsigned long int student_number= std::stoi(params.at(0));
     Account* chosen_account = accounts_[student_number];
     chosen_account->graduation();
