@@ -184,13 +184,12 @@ void University::complete(Params params)
 
 void University::print_signups(Params params)
 {
-    if (std::stoi(params.at(0))){
-    if ( accounts_.find(std::stoi(params.at(0))) == accounts_.end() )
+    if ( courses_.find(params.at(0)) == courses_.end() )
     {
         std::cout << CANT_FIND << params.at(0) << std::endl;
         return;
     }
-    }
+
     else std::cout << CANT_FIND << params.at(0) << std::endl;
     Course* chosen_course =  courses_[params.at(0)];
 
@@ -212,7 +211,7 @@ void University::print_completed(Params params)
     Account* chosen_account = accounts_[std::stoi(params.at(0))];
     int total_credits=0;
     for (auto& element: chosen_account->vector_courses()){
-        courses_.at(element)->print_long_info();
+        courses_.at(element)->print_info(true);
         total_credits+=courses_.at(element)->get_credits();
     }
     std::cout<<"Total credits: "<< total_credits <<std::endl;
