@@ -62,7 +62,6 @@ bool Account::is_course_completed(const std::string&course_to_be_checked)
     }
     while ( course_lists != nullptr ) {
       if (course_lists->courses_completed == course_to_be_checked){
-          delete course_lists;
           return true;
       }
       else {
@@ -95,7 +94,6 @@ void Account::add_course(const std::string &course_to_be_added, int num_mark)
             last_->next = new_item;
             last_ = new_item;
             }
-        delete new_item;
     }
     else {
         List_incompleted_courses* new_item = new List_incompleted_courses{course_to_be_added, nullptr};
@@ -106,7 +104,6 @@ void Account::add_course(const std::string &course_to_be_added, int num_mark)
            in_last_->next = new_item;
            in_last_ = new_item;
             }
-        delete new_item;
     }
 
 }
