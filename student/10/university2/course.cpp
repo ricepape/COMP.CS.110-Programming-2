@@ -65,22 +65,22 @@ int Course::get_credits() const
 void Course::add_student(unsigned long int student_to_be_added) {
     auto new_item = std::make_unique<List_students>(student_to_be_added, nullptr);
         if (!first_) {
-          first_ = new_item.get();
-          last_ = new_item.get();
+          first_ = new_item.release();
+          last_ = new_item.release();
         } else {
-          last_->next = new_item.get();
-          last_ = new_item.get();
+          last_->next = new_item.release();
+          last_ = new_item.release();
         }
 }
 
-bool Course::is_student_exists(unsigned long int &student_to_be_checked)
+bool Course::is_student_exists(unsigned long int student_to_be_checked)
 {
-    List_students* student_lists= first_;
+    std::unique_ptr<List_students> student_lists{first_};
     while ( student_lists != nullptr ) {
-      if (student_lists->students_signed_up == student_to_be_checked){
-          return true;
-      }
-      else student_lists = student_lists->next;
+        if (student_lists->students_signed_up == student_to_be_checked){
+            return true;
+        }
+        else student_lists = std::unique_ptr<List_students>{student_lists->next};
     }
     return false;
 }
@@ -89,10 +89,10 @@ bool Course::is_student_exists(unsigned long int &student_to_be_checked)
 std::vector<unsigned long int> Course::vector_students()
 {
     std::vector<unsigned long int> students;
-    List_students* student_lists= first_;
-    while ( student_lists != nullptr ) {
-        students.push_back(student_lists->students_signed_up);
-        student_lists=student_lists->next;
+        std::unique_ptr<List_students> student_lists{first_};
+        while ( student_lists != nullptr ) {
+            students.push_back(student_lists->students_signed_up);
+            student_lists=std::unique_ptr<List_students>{student_lists->next};
+        }
+        return students;
     }
-    return students;
-}

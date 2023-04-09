@@ -86,7 +86,7 @@ private:
     struct List_completed_courses{
         std::string courses_completed;
         List_completed_courses* next;
-        List_completed_courses(std::string courses_completed, List_completed_courses* next = nullptr) : courses_completed(std::move(courses_completed)), next(next) {};
+        List_completed_courses(std::string courses_completed, List_completed_courses* next = nullptr) : courses_completed(courses_completed), next(next) {};
     };
 
     List_completed_courses* first_ =nullptr;
@@ -95,7 +95,7 @@ private:
     struct List_incompleted_courses{
         std::string courses_incompleted;
         List_incompleted_courses* next;
-        List_incompleted_courses(std::string courses_incompleted, List_incompleted_courses* next = nullptr) : courses_incompleted(std::move(courses_incompleted)), next(next) {};
+        List_incompleted_courses(std::string courses_incompleted, List_incompleted_courses* next = nullptr) : courses_incompleted(courses_incompleted), next(next) {};
     };
 
     List_incompleted_courses* in_first_ =nullptr;

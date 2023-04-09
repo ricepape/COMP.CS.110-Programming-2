@@ -69,7 +69,6 @@ bool Account::is_course_completed(std::string course_to_be_checked)
           course_lists = course_lists->next;
       }
     }
-    delete course_lists;
     return false;
  }
 
@@ -89,23 +88,22 @@ void Account::add_course(std::string course_to_be_added, int num_mark)
     if (num_mark==1){
         auto new_item = std::make_unique<List_completed_courses>(course_to_be_added, nullptr);
             if (!first_) {
-              first_ = new_item.get();
-              last_ = new_item.get();
+              first_ = new_item.release();
+              last_ = new_item.release();
             } else {
-              last_->next = new_item.get();
-              last_ = new_item.get();
+              last_->next = new_item.release();
+              last_ = new_item.release();
             }
           } else {
             auto new_item = std::make_unique<List_incompleted_courses>(course_to_be_added, nullptr);
             if (!in_first_) {
-              in_first_ = new_item.get();
-              in_last_ = new_item.get();
+              in_first_ = new_item.release();
+              in_last_ = new_item.release();
             } else {
-              in_last_->next = new_item.get();
-              in_last_ = new_item.get();
+              in_last_->next = new_item.release();
+              in_last_ = new_item.release();
             }
           }
-
 }
 
 std::vector<std::string> Account::vector_courses(int num_mark)
