@@ -221,7 +221,6 @@ void University::print_completed(Params params)
 
 void University::print_study_state(Params params)
 {
-    std::cout << "Current:" << std::endl;
     unsigned long int account= std::stoi(params.at(0));
     if ( accounts_.find(account) == accounts_.end() )
     {
@@ -229,6 +228,7 @@ void University::print_study_state(Params params)
         return;
     }
     Account* chosen_account = accounts_[account];
+    std::cout << "Current:" << std::endl;
     for (auto& element: chosen_account->vector_courses(0)){
         courses_.at(element)->print_info(true);
     }
