@@ -221,6 +221,7 @@ void University::print_completed(Params params)
 
 void University::print_study_state(Params params)
 {
+    std::cout << "Current:" << std::endl;
     unsigned long int account= std::stoi(params.at(0));
     if ( accounts_.find(account) == accounts_.end() )
     {
