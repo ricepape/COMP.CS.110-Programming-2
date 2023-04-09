@@ -83,6 +83,7 @@ bool Course::is_student_exists(const unsigned long int &student_to_be_checked)
       }
       else student_lists = student_lists->next;
     }
+    delete student_lists;
     return false;
 }
 
@@ -95,5 +96,6 @@ std::vector<unsigned long int> Course::vector_students()
         students.push_back(student_lists->students_signed_up);
         student_lists=student_lists->next;
     }
+    delete student_lists;
     return students;
 }

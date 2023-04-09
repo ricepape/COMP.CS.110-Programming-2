@@ -62,12 +62,14 @@ bool Account::is_course_completed(const std::string&course_to_be_checked)
     }
     while ( course_lists != nullptr ) {
       if (course_lists->courses_completed == course_to_be_checked){
+          delete course_lists;
           return true;
       }
       else {
           course_lists = course_lists->next;
       }
     }
+    delete course_lists;
     return false;
  }
 
@@ -85,14 +87,15 @@ void Account::graduation()
 void Account::add_course(const std::string &course_to_be_added, int num_mark)
 {
     if (num_mark==1){
-    List_completed_courses* new_item = new List_completed_courses{course_to_be_added, nullptr};
-    if ( first_ == nullptr ) {
-       first_ = new_item;
-       last_ = new_item;
-    } else {
-       last_->next = new_item;
-       last_ = new_item;
-        }
+        List_completed_courses* new_item = new List_completed_courses{course_to_be_added, nullptr};
+        if ( first_ == nullptr ) {
+            first_ = new_item;
+            last_ = new_item;
+        } else {
+            last_->next = new_item;
+            last_ = new_item;
+            }
+        delete new_item;
     }
     else {
         List_incompleted_courses* new_item = new List_incompleted_courses{course_to_be_added, nullptr};
@@ -103,7 +106,9 @@ void Account::add_course(const std::string &course_to_be_added, int num_mark)
            in_last_->next = new_item;
            in_last_ = new_item;
             }
+        delete new_item;
     }
+
 }
 
 std::vector<std::string> Account::vector_courses(int num_mark)
@@ -115,7 +120,8 @@ std::vector<std::string> Account::vector_courses(int num_mark)
     while ( course_lists != nullptr ) {
         courses.push_back(course_lists->courses_completed);
         course_lists=course_lists->next;
-    }
+        }
+    delete course_lists;
     }
     else if (num_mark==0){
         List_incompleted_courses* course_lists= in_first_;
@@ -123,6 +129,7 @@ std::vector<std::string> Account::vector_courses(int num_mark)
             courses.push_back(course_lists->courses_incompleted);
             course_lists=course_lists->next;
         }
+    delete course_lists;
     }
     return courses;
 }
@@ -137,5 +144,6 @@ void Account::delete_course(const std::string &course_to_be_deleted)
     }
         else course = course->next;
     }
+    delete course;
     return;
 }
