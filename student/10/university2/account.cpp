@@ -54,18 +54,18 @@ int Account::get_account_number() const
     return account_number_;
 }
 
-bool Account::is_course_completed(const std::string&student_to_be_checked)
+bool Account::is_course_completed(const std::string&course_to_be_checked)
 {
-    List_completed_courses* student_lists= first_;
-    if (student_lists==nullptr){
+    List_completed_courses* course_lists= first_;
+    if (course_lists==nullptr){
         return false;
     }
-    while ( student_lists != nullptr ) {
-      if (student_lists->courses_completed == student_to_be_checked){
+    while ( course_lists != nullptr ) {
+      if (course_lists->courses_completed == course_to_be_checked){
           return true;
       }
       else {
-          student_lists = student_lists->next;
+          course_lists = course_lists->next;
       }
     }
     return false;
@@ -82,8 +82,9 @@ void Account::graduation()
     get_graduated();
 }
 
-void Account::add_course(const std::string &course_to_be_added)
+void Account::add_course(const std::string &course_to_be_added, int num_mark)
 {
+    if (num_mark==1){
     List_completed_courses* new_item = new List_completed_courses{course_to_be_added, nullptr};
     if ( first_ == nullptr ) {
        first_ = new_item;
@@ -91,41 +92,50 @@ void Account::add_course(const std::string &course_to_be_added)
     } else {
        last_->next = new_item;
        last_ = new_item;
-    }
-}
-
-void Account::sort() {
-    bool swapped = true;
-    List_completed_courses* ptr1 = nullptr;
-    List_completed_courses* lptr = nullptr;
-
-    if (first_ == nullptr)
-        return;
-
-    while (swapped) {
-        swapped = false;
-        ptr1 = first_;
-        while (ptr1->next != lptr) {
-            if (ptr1->courses_completed > ptr1->next->courses_completed) {
-                std::string temp = ptr1->courses_completed;
-                ptr1->courses_completed = ptr1->next->courses_completed;
-                ptr1->next->courses_completed = temp;
-                swapped = true;
-            }
-            ptr1 = ptr1->next;
         }
-        lptr = ptr1;
+    }
+    else {
+        List_incompleted_courses* new_item = new List_incompleted_courses{course_to_be_added, nullptr};
+        if ( in_first_ == nullptr ) {
+           in_first_ = new_item;
+           in_last_ = new_item;
+        } else {
+           in_last_->next = new_item;
+           in_last_ = new_item;
+            }
     }
 }
 
-std::vector<std::string> Account::vector_courses()
+std::vector<std::string> Account::vector_courses(int num_mark)
 {
-    sort();
-    std::vector<std::string> students;
-    List_completed_courses* student_lists= first_;
-    while ( student_lists != nullptr ) {
-        students.push_back(student_lists->courses_completed);
-        student_lists=student_lists->next;
+
+    std::vector<std::string> courses;
+    if (num_mark==1){
+    List_completed_courses* course_lists= first_;
+    while ( course_lists != nullptr ) {
+        courses.push_back(course_lists->courses_completed);
+        course_lists=course_lists->next;
     }
-    return students;
+    }
+    else if (num_mark==0){
+        List_incompleted_courses* course_lists= in_first_;
+        while ( course_lists != nullptr ) {
+            courses.push_back(course_lists->courses_incompleted);
+            course_lists=course_lists->next;
+        }
+    }
+    return courses;
+}
+
+void Account::delete_course(const std::string &course_to_be_deleted)
+{
+    List_incompleted_courses* course= in_first_;
+    while ( course != nullptr ) {
+        if (course->courses_incompleted == course_to_be_deleted){
+            in_first_ = in_first_->next;
+            return;
+    }
+        else course = course->next;
+    }
+    return;
 }

@@ -86,49 +86,9 @@ bool Course::is_student_exists(const unsigned long int &student_to_be_checked)
     return false;
 }
 
-void Course::delete_student(const unsigned long int &student_to_be_deleted)
-{
-    List_students* student_lists= first_;
-    while ( student_lists != nullptr ) {
-        if (student_lists->students_signed_up == student_to_be_deleted){
-            first_ = first_->next;
-            return;
-    }
-        else student_lists = student_lists->next;
-    }
-    return;
-}
-
-
-void Course::sort() {
-    bool swapped = true;
-    List_students* ptr1 = nullptr;
-    List_students* lptr = nullptr;
-
-    if (first_ == nullptr)
-        return;
-
-    while (swapped) {
-        swapped = false;
-        ptr1 = first_;
-        while (ptr1->next != lptr) {
-            if (ptr1->students_signed_up > ptr1->next->students_signed_up) {
-                unsigned long int temp = ptr1->students_signed_up;
-                ptr1->students_signed_up = ptr1->next->students_signed_up;
-                ptr1->next->students_signed_up = temp;
-                swapped = true;
-            }
-            ptr1 = ptr1->next;
-        }
-        lptr = ptr1;
-    }
-}
-
-
 
 std::vector<unsigned long int> Course::vector_students()
 {
-    sort();
     std::vector<unsigned long int> students;
     List_students* student_lists= first_;
     while ( student_lists != nullptr ) {

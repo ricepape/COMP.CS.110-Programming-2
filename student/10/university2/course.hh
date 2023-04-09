@@ -80,8 +80,6 @@ public:
 
     bool is_student_exists(const unsigned long int& student_to_be_checked);
 
-    void delete_student(const unsigned long int& student_to_be_deleted);
-
     std::vector<unsigned long int> vector_students();
 
     void sort();

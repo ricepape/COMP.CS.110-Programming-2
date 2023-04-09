@@ -65,13 +65,15 @@ public:
 
     bool get_graduated();
 
-    void add_course(const std::string& course_to_be_added);
+    void add_course(const std::string& course_to_be_added, int num_mark);
 
     void sort();
 
-    std::vector<std::string> vector_courses();
+    std::vector<std::string> vector_courses(int num_mark);
 
     void graduation();
+
+    void delete_course(const std::string &course_to_be_deleted);
 
 private:
     std::string full_name_;
@@ -88,6 +90,14 @@ private:
 
     List_completed_courses* first_ =nullptr;
     List_completed_courses* last_ = nullptr;
+
+    struct List_incompleted_courses{
+        std::string courses_incompleted;
+        List_incompleted_courses* next;
+    };
+
+    List_incompleted_courses* in_first_ =nullptr;
+    List_incompleted_courses* in_last_ = nullptr;
 
 
     // Most probably you will need here an attribute (e.g. vector) containing 
