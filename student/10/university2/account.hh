@@ -61,11 +61,11 @@ public:
      */
     int get_account_number() const;
 
-    bool is_course_completed(const std::string& course_to_be_checked);
+    bool is_course_completed(std::string course_to_be_checked);
 
     bool get_graduated();
 
-    void add_course(const std::string& course_to_be_added, int num_mark);
+    void add_course(std::string course_to_be_added, int num_mark);
 
     void sort();
 
@@ -73,7 +73,7 @@ public:
 
     void graduation();
 
-    void delete_course(const std::string &course_to_be_deleted);
+    void delete_course(const std::string course_to_be_deleted);
 
 private:
     std::string full_name_;
@@ -86,6 +86,7 @@ private:
     struct List_completed_courses{
         std::string courses_completed;
         List_completed_courses* next;
+        List_completed_courses(std::string courses_completed, List_completed_courses* next = nullptr) : courses_completed(std::move(courses_completed)), next(next) {};
     };
 
     List_completed_courses* first_ =nullptr;
@@ -94,6 +95,7 @@ private:
     struct List_incompleted_courses{
         std::string courses_incompleted;
         List_incompleted_courses* next;
+        List_incompleted_courses(std::string courses_incompleted, List_incompleted_courses* next = nullptr) : courses_incompleted(std::move(courses_incompleted)), next(next) {};
     };
 
     List_incompleted_courses* in_first_ =nullptr;

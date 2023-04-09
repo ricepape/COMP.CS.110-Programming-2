@@ -76,9 +76,9 @@ public:
      */
     int get_credits() const;
 
-    void add_student(const unsigned long int& student_to_be_added);
+    void add_student(unsigned long int student_to_be_added);
 
-    bool is_student_exists(const unsigned long int& student_to_be_checked);
+    bool is_student_exists(unsigned long int& student_to_be_checked);
 
     std::vector<unsigned long int> vector_students();
 
@@ -96,6 +96,7 @@ private:
     struct List_students{
         unsigned long int students_signed_up;
         List_students* next;
+        List_students(unsigned long int students_signed_up, List_students* next=nullptr) : students_signed_up(std::move(students_signed_up)), next(next) {};
     };
 
     List_students* first_ =nullptr;

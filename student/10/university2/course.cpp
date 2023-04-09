@@ -1,6 +1,6 @@
 #include "course.hh"
 #include <iostream>
-
+#include <memory>
 
 Course::Course(const std::string& code, const std::string& name, int credits):
     course_code_(code), name_(name), credits_(credits)
@@ -62,19 +62,18 @@ int Course::get_credits() const
     return credits_;
 }
 
-void Course::add_student(const unsigned long int &student_to_be_added) {
-   List_students* new_item = new List_students{student_to_be_added, nullptr};
-
-   if ( first_ == nullptr ) {
-      first_ = new_item;
-      last_ = new_item;
-   } else {
-      last_->next = new_item;
-      last_ = new_item;
-   }
+void Course::add_student(unsigned long int student_to_be_added) {
+    auto new_item = std::make_unique<List_students>(student_to_be_added, nullptr);
+        if (!first_) {
+          first_ = new_item.get();
+          last_ = new_item.get();
+        } else {
+          last_->next = new_item.get();
+          last_ = new_item.get();
+        }
 }
 
-bool Course::is_student_exists(const unsigned long int &student_to_be_checked)
+bool Course::is_student_exists(unsigned long int &student_to_be_checked)
 {
     List_students* student_lists= first_;
     while ( student_lists != nullptr ) {
@@ -83,7 +82,6 @@ bool Course::is_student_exists(const unsigned long int &student_to_be_checked)
       }
       else student_lists = student_lists->next;
     }
-    delete student_lists;
     return false;
 }
 
@@ -96,6 +94,5 @@ std::vector<unsigned long int> Course::vector_students()
         students.push_back(student_lists->students_signed_up);
         student_lists=student_lists->next;
     }
-    delete student_lists;
     return students;
 }
