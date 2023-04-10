@@ -9,6 +9,12 @@ Course::Course(const std::string& code, const std::string& name, int credits):
 
 Course::~Course()
 {
+    List_students* current = first_;
+        while (current != nullptr) {
+            List_students* temp = current;
+            current = current->next;
+            delete temp;
+        }
 }
 
 void Course::print_info(bool print_new_line)
@@ -62,25 +68,26 @@ int Course::get_credits() const
     return credits_;
 }
 
-void Course::add_student(unsigned long int student_to_be_added) {
-    auto new_item = std::make_unique<List_students>(student_to_be_added, nullptr);
-        if (!first_) {
-          first_ = new_item.release();
-          last_ = new_item.release();
-        } else {
-          last_->next = new_item.release();
-          last_ = new_item.release();
-        }
+void Course::add_student(const unsigned long int &student_to_be_added) {
+   List_students* new_item = new List_students{student_to_be_added, nullptr};
+
+   if ( first_ == nullptr ) {
+      first_ = new_item;
+      last_ = new_item;
+   } else {
+      last_->next = new_item;
+      last_ = new_item;
+   }
 }
 
-bool Course::is_student_exists(unsigned long int student_to_be_checked)
+bool Course::is_student_exists(const unsigned long int &student_to_be_checked)
 {
-    std::unique_ptr<List_students> student_lists{first_};
+    List_students* student_lists= first_;
     while ( student_lists != nullptr ) {
-        if (student_lists->students_signed_up == student_to_be_checked){
-            return true;
-        }
-        else student_lists = std::unique_ptr<List_students>{student_lists->next};
+      if (student_lists->students_signed_up == student_to_be_checked){
+          return true;
+      }
+      else student_lists = student_lists->next;
     }
     return false;
 }
@@ -89,10 +96,11 @@ bool Course::is_student_exists(unsigned long int student_to_be_checked)
 std::vector<unsigned long int> Course::vector_students()
 {
     std::vector<unsigned long int> students;
-        std::unique_ptr<List_students> student_lists{first_};
-        while ( student_lists != nullptr ) {
-            students.push_back(student_lists->students_signed_up);
-            student_lists=std::unique_ptr<List_students>{student_lists->next};
-        }
-        return students;
+    List_students* student_lists= first_;
+    while ( student_lists != nullptr ) {
+        students.push_back(student_lists->students_signed_up);
+        student_lists=student_lists->next;
     }
+    return students;
+}
+

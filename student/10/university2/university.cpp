@@ -229,7 +229,7 @@ void University::print_study_state(Params params)
     }
     Account* chosen_account = accounts_[account];
     std::cout << "Current:" << std::endl;
-    for (auto element: chosen_account->vector_courses(0)){
+    for (auto &element: chosen_account->vector_courses(0)){
         courses_.at(element)->print_info(true);
     }
     std::cout << "Completed:" << std::endl;
@@ -247,7 +247,7 @@ void University::graduate(Params params)
     unsigned long int account= std::stoi(params.at(0));
     Account* chosen_account = accounts_[account];
     chosen_account->graduation();
-    for ( auto course : courses_ ){
+    for (auto &course : courses_ ){
         if (course.second->is_student_exists(account)){
             if (not chosen_account->is_course_completed(course.first)){
                 chosen_account->add_course(course.first,1);
