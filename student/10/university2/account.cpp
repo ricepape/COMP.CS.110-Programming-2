@@ -117,7 +117,7 @@ void Account::add_course(const std::string &course_to_be_added, int num_mark)
         } else {
            in_last_->next = new_item;
            in_last_ = new_item;
-            }
+        }
     }
 }
 
