@@ -3,10 +3,10 @@
 #include "animal.hh"
 
 
-class mammal: public Animal
+class Mammal: public Animal
 {
 public:
-    mammal();
+    Mammal();
     void suckle(std::ostream& output);
 };
 

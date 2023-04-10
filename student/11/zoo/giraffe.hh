@@ -2,10 +2,11 @@
 #define GIRAFFE_H
 #include "mammal.hh"
 
-class giraffe: public mammal
+class Giraffe: public Mammal
 {
 public:
-    giraffe();
+    Giraffe();
+    void make_noise(std::ostream& output);
 };
 
 #endif // GIRAFFE_H

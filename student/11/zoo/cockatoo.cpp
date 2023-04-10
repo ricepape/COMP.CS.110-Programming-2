@@ -1,11 +1,11 @@
 #include "cockatoo.hh"
 
-cockatoo::cockatoo()
+Cockatoo::Cockatoo()
 {
 
 }
 
-void cockatoo::sing(std::ostream &output)
+void Cockatoo::sing(std::ostream &output)
 {
    output <<"Kee-ow kee-ow!" << std::endl;
 }

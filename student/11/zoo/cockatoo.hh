@@ -2,10 +2,11 @@
 #define COCKATOO_H
 #include "bird.hh"
 
-class cockatoo: public Bird
+class Cockatoo: public Bird
 {
 public:
-    cockatoo();
+    Cockatoo();
+    void sing(std::ostream& output);
 };
 
 #endif // COCKATOO_H
