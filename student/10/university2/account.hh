@@ -65,9 +65,7 @@ public:
 
     bool get_graduated();
 
-    void add_completed_course(const std::string &course_to_be_added);
-
-    void add_incompleted_course(const std::string &course_to_be_added);
+    void add_course(const std::string &course_to_be_added, int num_mark);
 
     void sort();
 

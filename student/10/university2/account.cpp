@@ -141,17 +141,3 @@ std::vector<std::string> Account::vector_courses(int num_mark)
     }
     return courses;
 }
-
-void Account::delete_course(const std::string &course_to_be_deleted)
-{
-    List_incompleted_courses* course= in_first_;
-    while ( course != nullptr ) {
-        if (course->courses_incompleted == course_to_be_deleted){
-            in_first_ = in_first_->next;
-            return;
-    }
-        else course = course->next;
-    }
-    return;
-}
-

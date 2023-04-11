@@ -182,7 +182,6 @@ void University::complete(Params params)
         return;
     }
     chosen_account->add_course(code,1);
-    chosen_account->delete_course(code);
     std::cout << COMPLETED << std::endl;
 }
 
@@ -230,7 +229,9 @@ void University::print_study_state(Params params)
     Account* chosen_account = accounts_[account];
     std::cout << "Current:" << std::endl;
     for (auto &element: chosen_account->vector_courses(0)){
-        courses_.at(element)->print_info(true);
+        if (not chosen_account->is_course_completed(element)){
+            courses_.at(element)->print_info(true);
+        }
     }
     std::cout << "Completed:" << std::endl;
     print_completed(params);
@@ -251,7 +252,6 @@ void University::graduate(Params params)
         if (course.second->is_student_exists(account)){
             if (not chosen_account->is_course_completed(course.first)){
                 chosen_account->add_course(course.first,1);
-                chosen_account->delete_course(course.first);
             }
         }
     }
