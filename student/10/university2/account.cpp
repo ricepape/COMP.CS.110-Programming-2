@@ -98,3 +98,32 @@ void Account::complete(const std::string& course_to_be_completed) {
     }
 }
 
+
+
+std::vector<std::string> Account::vector_courses(bool is_completed)
+{
+
+    std::vector<std::string> vector_courses;
+    if (is_completed){
+        for (int k=0; k<complete_running_number_; ++k){
+            List_courses* course_ptr= first_;
+            while ( course_ptr != nullptr ) {
+                if (course_ptr->is_completed == is_completed and course_ptr->order_completed_==k)
+                vector_courses.push_back(course_ptr->courses);
+                course_ptr=course_ptr->next;
+            }
+        }
+    }
+    else {
+    List_courses* course_ptr= first_;
+    while ( course_ptr != nullptr ) {
+        if (course_ptr->is_completed == is_completed)
+        vector_courses.push_back(course_ptr->courses);
+        course_ptr=course_ptr->next;
+    }
+    }
+    return vector_courses;
+}
+
+
+

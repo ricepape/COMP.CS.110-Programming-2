@@ -84,6 +84,11 @@ public:
      */
     void complete(const std::string& course_to_be_completed);
 
+    /**
+     * @brief create a vector of courses for later printing use
+     */
+    std::vector<std::string> vector_courses(bool is_completed);
+
 
 private:
     std::string full_name_;

@@ -207,7 +207,17 @@ void University::print_signups(Params params)
 
 void University::print_completed(Params params)
 {
-
+    unsigned long int account= std::stoi(params.at(0));
+    if (not check_if_student_exists(account)){
+        return;
+    }
+    Account* chosen_account = accounts_[account];
+    int total_credits=0;
+    for (auto& element: chosen_account->vector_courses(true)){
+        courses_.at(element)->print_info(true);
+        total_credits+=courses_.at(element)->get_credits();
+    }
+    std::cout<<"Total credits: "<< total_credits <<std::endl;
 
 }
 

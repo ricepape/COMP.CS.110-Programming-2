@@ -84,6 +84,8 @@ public:
 
     bool is_student_exists(const unsigned long int& student_to_be_checked);
 
+    std::vector<unsigned long int> vector_students();
+
 private:
     std::string course_code_;
     std::string name_;
