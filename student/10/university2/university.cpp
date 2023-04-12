@@ -168,7 +168,26 @@ void University::sign_up(Params params)
 
 void University::complete(Params params)
 {
-
+    std::string code = params.at(0);
+    unsigned long int account = std::stoi(params.at(1));
+    if (not check_if_course_exists(code)){
+        return;
+    }
+    if (not check_if_student_exists(account)){
+        return;
+    }
+    Course* chosen_course =  courses_[code];
+    Account* chosen_account = accounts_[account];
+    if (not chosen_course->is_student_exists(account)){
+            std::cout << NO_SIGNUPS << std::endl;
+            return;
+        }
+    if (chosen_account->is_course_completed(code)){
+        std::cout << NO_SIGNUPS << std::endl;
+        return;
+    }
+    chosen_account->complete(code);
+    std::cout << COMPLETED << std::endl;
 }
 
 
@@ -179,6 +198,7 @@ void University::print_signups(Params params)
 
 void University::print_completed(Params params)
 {
+
 
 }
 

@@ -61,35 +61,11 @@ int Account::get_account_number() const
     return account_number_;
 }
 
+
 bool Account::get_graduated()
 {
     return graduated;
 }
-
-void Account::graduation()
-{
-    graduated = true;
-    get_graduated();
-}
-
-bool Account::is_course_completed(const std::string&course_to_be_checked)
-{
-    List_courses* course_lists= first_;
-    if (course_lists==nullptr){
-        return false;
-    }
-    while ( course_lists != nullptr ) {
-      if (course_lists->courses == course_to_be_checked){
-          if(course_lists->is_completed == true){
-            return true ;
-          } else return false;
-      }
-      else {
-          course_lists = course_lists->next;
-      }
-    }
-    return false;
- }
 
 void Account::add_course(const std::string &course_to_be_added)
 {
@@ -121,33 +97,4 @@ void Account::complete(const std::string& course_to_be_completed) {
 
     }
 }
-
-
-
-std::vector<std::string> Account::vector_courses(bool is_completed)
-{
-
-    std::vector<std::string> vector_courses;
-    if (is_completed){
-        for (int k=0; k<complete_running_number_; ++k){
-            List_courses* course_ptr= first_;
-            while ( course_ptr != nullptr ) {
-                if (course_ptr->is_completed == is_completed and course_ptr->order_completed_==k)
-                vector_courses.push_back(course_ptr->courses);
-                course_ptr=course_ptr->next;
-            }
-        }
-    }
-    else {
-    List_courses* course_ptr= first_;
-    while ( course_ptr != nullptr ) {
-        if (course_ptr->is_completed == is_completed)
-        vector_courses.push_back(course_ptr->courses);
-        course_ptr=course_ptr->next;
-    }
-    }
-    return vector_courses;
-}
-
-
 
