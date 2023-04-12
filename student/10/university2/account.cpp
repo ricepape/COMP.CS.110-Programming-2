@@ -67,6 +67,31 @@ bool Account::get_graduated()
     return graduated;
 }
 
+void Account::graduation()
+{
+    graduated = true;
+    get_graduated();
+}
+
+bool Account::is_course_completed(const std::string&course_to_be_checked)
+{
+    List_courses* course_lists= first_;
+    if (course_lists==nullptr){
+        return false;
+    }
+    while ( course_lists != nullptr ) {
+      if (course_lists->courses == course_to_be_checked){
+          if(course_lists->is_completed == true){
+            return true ;
+          } else return false;
+      }
+      else {
+          course_lists = course_lists->next;
+      }
+    }
+    return false;
+ }
+
 void Account::add_course(const std::string &course_to_be_added)
 {
     List_courses* new_item = new List_courses{course_to_be_added, false, 0, nullptr};

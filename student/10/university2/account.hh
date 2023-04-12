@@ -89,6 +89,10 @@ public:
      */
     std::vector<std::string> vector_courses(bool is_completed);
 
+    /**
+     * @brief change the graduation status
+     */
+    void graduation();
 
 private:
     std::string full_name_;

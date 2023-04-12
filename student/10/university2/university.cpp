@@ -242,5 +242,18 @@ void University::print_study_state(Params params)
 
 void University::graduate(Params params)
 {
-
+    unsigned long int account= std::stoi(params.at(0));
+    if (not check_if_student_exists(account)){
+        return;
+    }
+    Account* chosen_account = accounts_[account];
+    chosen_account->graduation();
+    for (auto &course : courses_ ){
+        if (course.second->is_student_exists(account)){
+            if (not chosen_account->is_course_completed(course.first)){
+                chosen_account->complete(course.first);
+            }
+        }
+    }
+    std::cout << GRADUATED << std::endl;
 }
