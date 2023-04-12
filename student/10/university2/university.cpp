@@ -224,7 +224,19 @@ void University::print_completed(Params params)
 
 void University::print_study_state(Params params)
 {
-
+    unsigned long int account= std::stoi(params.at(0));
+    if (not check_if_student_exists(account)){
+        return;
+    }
+    Account* chosen_account = accounts_[account];
+    std::cout << "Current:" << std::endl;
+    for (auto &element: chosen_account->vector_courses(false)){
+        if (not chosen_account->is_course_completed(element)){
+            courses_.at(element)->print_info(true);
+        }
+    }
+    std::cout << "Completed:" << std::endl;
+    print_completed(params);
 }
 
 
