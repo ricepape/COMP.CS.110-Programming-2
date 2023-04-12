@@ -193,6 +193,15 @@ void University::complete(Params params)
 
 void University::print_signups(Params params)
 {
+    std::string code = params.at(0);
+    if (not check_if_course_exists(code)){
+        return;
+    }
+    Course* chosen_course =  courses_[code];
+    for (auto& element: chosen_course->vector_students()){
+        std::cout << element << ": "<< accounts_[element]->get_full_name()
+                  << ", " << accounts_[element]->get_email() << std::endl;
+    }
 
 }
 
