@@ -30,18 +30,11 @@ Account::Account(const std::string& full_name, int account_number,
 
 Account::~Account()
 {
-    List_completed_courses* current = first_;
+    List_courses* current = first_;
         while (current != nullptr) {
-            List_completed_courses* temp = current;
+            List_courses* temp = current;
             current = current->next;
             delete temp;
-        }
-
-        List_incompleted_courses* in_current = in_first_;
-        while (in_current != nullptr) {
-            List_incompleted_courses* in_temp = in_current;
-            in_current = in_current->next;
-            delete in_temp;
         }
 }
 
@@ -68,24 +61,6 @@ int Account::get_account_number() const
     return account_number_;
 }
 
-
-bool Account::is_course_completed(const std::string&course_to_be_checked)
-{
-    List_completed_courses* course_lists= first_;
-    if (course_lists==nullptr){
-        return false;
-    }
-    while ( course_lists != nullptr ) {
-      if (course_lists->courses_completed == course_to_be_checked){
-          return true;
-      }
-      else {
-          course_lists = course_lists->next;
-      }
-    }
-    return false;
- }
-
 bool Account::get_graduated()
 {
     return graduated;
@@ -97,47 +72,83 @@ void Account::graduation()
     get_graduated();
 }
 
-void Account::add_course(const std::string &course_to_be_added, int num_mark)
+bool Account::is_course_completed(const std::string&course_to_be_checked)
 {
-    if (num_mark==1){
-    List_completed_courses* new_item = new List_completed_courses{course_to_be_added, nullptr};
+    List_courses* course_lists= first_;
+    if (course_lists==nullptr){
+        return false;
+    }
+    while ( course_lists != nullptr ) {
+      if (course_lists->courses == course_to_be_checked){
+          if(course_lists->is_completed == true){
+            return true ;
+          } else return false;
+      }
+      else {
+          course_lists = course_lists->next;
+      }
+    }
+    return false;
+ }
+
+
+void Account::add_course(const std::string &course_to_be_added)
+{
+    List_courses* new_item = new List_courses{course_to_be_added, false, 0, nullptr};
     if ( first_ == nullptr ) {
        first_ = new_item;
        last_ = new_item;
     } else {
        last_->next = new_item;
        last_ = new_item;
+    }
+}
+
+void Account::complete(const std::string& course_to_be_completed) {
+    List_courses* course = first_;
+
+    while (course != nullptr) {
+        if (course->courses == course_to_be_completed) {
+            if (!course->is_completed) {
+                course->is_completed = true;
+                course->order_completed_=complete_running_number_;
+                complete_running_number_+=1;
+                return;
+                }
+            } else
+        {
+            course = course->next;
+        }
+
+    }
+}
+
+
+
+std::vector<std::string> Account::vector_courses(bool is_completed)
+{
+
+    std::vector<std::string> vector_courses;
+    if (is_completed){
+        for (int k=0; k<complete_running_number_; ++k){
+            List_courses* course_ptr= first_;
+            while ( course_ptr != nullptr ) {
+                if (course_ptr->is_completed == is_completed and course_ptr->order_completed_==k)
+                vector_courses.push_back(course_ptr->courses);
+                course_ptr=course_ptr->next;
+            }
         }
     }
     else {
-        List_incompleted_courses* new_item = new List_incompleted_courses{course_to_be_added, nullptr};
-        if ( in_first_ == nullptr ) {
-           in_first_ = new_item;
-           in_last_ = new_item;
-        } else {
-           in_last_->next = new_item;
-           in_last_ = new_item;
-        }
+    List_courses* course_ptr= first_;
+    while ( course_ptr != nullptr ) {
+        if (course_ptr->is_completed == is_completed)
+        vector_courses.push_back(course_ptr->courses);
+        course_ptr=course_ptr->next;
     }
+    }
+    return vector_courses;
 }
 
-std::vector<std::string> Account::vector_courses(int num_mark)
-{
 
-    std::vector<std::string> courses;
-    if (num_mark==1){
-    List_completed_courses* course_lists= first_;
-    while ( course_lists != nullptr ) {
-        courses.push_back(course_lists->courses_completed);
-        course_lists=course_lists->next;
-    }
-    }
-    else if (num_mark==0){
-        List_incompleted_courses* course_lists= in_first_;
-        while ( course_lists != nullptr ) {
-            courses.push_back(course_lists->courses_incompleted);
-            course_lists=course_lists->next;
-        }
-    }
-    return courses;
-}
+

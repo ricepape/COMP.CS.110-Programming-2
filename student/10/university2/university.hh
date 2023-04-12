@@ -143,6 +143,10 @@ public:
      */
     void graduate(Params params);
 
+    bool check_if_course_exists(std::string code);
+
+    bool check_if_student_exists(unsigned long int account);
+
 private:
     Courses courses_; // all courses: map<Course code, Course*>
     Accounts accounts_; // all accounts: map<Account number, Account*>

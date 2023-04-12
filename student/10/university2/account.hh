@@ -61,19 +61,38 @@ public:
      */
     int get_account_number() const;
 
+    /**
+     * @brief check if the course given is completed or not
+     * @return true if completed, false otherwise
+     */
     bool is_course_completed(const std::string& course_to_be_checked);
 
+    /**
+     * @brief get_graduation status
+     * @return graduation status as bool value linked to this account
+     */
     bool get_graduated();
 
-    void add_course(const std::string &course_to_be_added, int num_mark);
+    /**
+     * @brief add the given course into the struct List_courses linked to this account
+     */
+    void add_course(const std::string &course_to_be_added);
 
-    void sort();
+    /**
+     * @brief change the status of the given course and the order of completion
+     * in the struct List_courses linked to this account
+     */
+    void complete(const std::string& course_to_be_completed);
 
-    std::vector<std::string> vector_courses(int num_mark);
+    /**
+     * @brief create a vector of courses for later printing use
+     */
+    std::vector<std::string> vector_courses(bool is_completed);
 
+    /**
+     * @brief change the graduation status
+     */
     void graduation();
-
-    void delete_course(const std::string &course_to_be_deleted);
 
 private:
     std::string full_name_;
@@ -83,26 +102,21 @@ private:
     const int account_number_;
     bool graduated = false;
 
-    struct List_completed_courses{
-        std::string courses_completed;
-        List_completed_courses* next;
+    struct List_courses{
+        std::string courses;
+        bool is_completed;
+        int order_completed_;
+        List_courses* next;
     };
 
-    List_completed_courses* first_ =nullptr;
-    List_completed_courses* last_ = nullptr;
+    List_courses* first_ =nullptr;
+    List_courses* last_ = nullptr;
 
-    struct List_incompleted_courses{
-        std::string courses_incompleted;
-        List_incompleted_courses* next;
-    };
-
-    List_incompleted_courses* in_first_ =nullptr;
-    List_incompleted_courses* in_last_ = nullptr;
+    //to keep track of the order of the completed courses
+    int complete_running_number_=1;
 
 
-    // Most probably you will need here an attribute (e.g. vector) containing
-    // courses the account has signed up for (either completed or uncompleted
-    // or both)
+
 
 };
 
