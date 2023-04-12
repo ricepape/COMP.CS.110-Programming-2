@@ -78,21 +78,8 @@ public:
      */
     void add_course(const std::string &course_to_be_added);
 
-    /**
-     * @brief change the status of the given course and the order of completion
-     * in the struct List_courses linked to this account
-     */
-    void complete(const std::string& course_to_be_completed);
 
-    /**
-     * @brief create a vector of courses for later printing use
-     */
-    std::vector<std::string> vector_courses(bool is_completed);
 
-    /**
-     * @brief change the graduation status
-     */
-    void graduation();
 
 private:
     std::string full_name_;

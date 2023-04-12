@@ -76,6 +76,13 @@ public:
      */
     int get_credits() const;
 
+    /**
+     * @brief get_credits
+     * @return the amount of credits this course is valued.
+     */
+    void add_student(const unsigned long int& student_to_be_added);
+
+    bool is_student_exists(const unsigned long int& student_to_be_checked);
 
 private:
     std::string course_code_;

@@ -93,14 +93,4 @@ bool Course::is_student_exists(const unsigned long int &student_to_be_checked)
 }
 
 
-std::vector<unsigned long int> Course::vector_students()
-{
-    std::vector<unsigned long int> students;
-    List_students* student_lists= first_;
-    while ( student_lists != nullptr ) {
-        students.push_back(student_lists->students_signed_up);
-        student_lists=student_lists->next;
-    }
-    return students;
-}
 

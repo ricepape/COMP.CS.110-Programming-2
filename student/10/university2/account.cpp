@@ -91,7 +91,6 @@ bool Account::is_course_completed(const std::string&course_to_be_checked)
     return false;
  }
 
-
 void Account::add_course(const std::string &course_to_be_added)
 {
     List_courses* new_item = new List_courses{course_to_be_added, false, 0, nullptr};
