@@ -61,7 +61,6 @@ int Account::get_account_number() const
     return account_number_;
 }
 
-
 bool Account::get_graduated()
 {
     return graduated;
