@@ -174,17 +174,17 @@ bool Course::is_student_exists(const unsigned long int &student_to_be_checked)
 /**
  * @Function vector_students: returning a vector of students' code account in the signing up order.
  **/
-std::vector<std::string> Course::vector_students()
+std::vector<unsigned long int> Course::vector_students()
 
 {   //Create a vector for storage
-    std::vector<std::string> students;
+    std::vector<unsigned long int> students;
     List_students* student_lists= first_;
     //Run through all the elements in the linked list
     while ( student_lists != nullptr ) {
-        std::string element = std::to_string(student_lists->students_signed_up);
-        students.push_back(element);
-        student_lists=student_lists->next;
-    }
-    return students;
+            students.push_back(student_lists->students_signed_up);
+            student_lists=student_lists->next;
+        }
+        return students;
+
 }
 

@@ -3,6 +3,7 @@
  * COMP.CS.110 Ohjelmointi 2: Rakenteet / Programming 2: Structures
  * -------------
  * Class representing a student or a staff account in the university system.
+ *
  * When a new person (account) is added, they get an account
  * number (that can be called a student number in the case of a student). Account numbers
  * are running numbers such that the first person added gets the number 111111. Besides

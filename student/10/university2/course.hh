@@ -96,7 +96,7 @@ public:
      * @return a vector containing all student numbers whose signed up
      * in the course
      */
-    std::vector<std::string> vector_students();
+    std::vector<unsigned long int> vector_students();
 
 private:
     std::string course_code_;

@@ -373,9 +373,12 @@ void University::print_signups(Params params)
     Course* chosen_course =  courses_[code];
     //get the vector containing all students who have signed up and print
     //their infomation
-    print_account(chosen_course->vector_students());
-
+    for (auto& element: chosen_course->vector_students()){
+            std::cout << element << ": "<< accounts_[element]->get_full_name()
+                      << ", " << accounts_[element]->get_email() << std::endl;
+    }
 }
+
 
 
 /**
