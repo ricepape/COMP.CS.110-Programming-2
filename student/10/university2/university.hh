@@ -4,8 +4,6 @@
  * -----------------
  * Class representing a simple university with students, staff and courses.
  *
- * Note: Students shouldn't need to make changes to the existing functions
- * or their implementations.
  * */
 #ifndef UNIVERSITY_HH
 #define UNIVERSITY_HH
@@ -143,8 +141,19 @@ public:
      */
     void graduate(Params params);
 
+    /**
+     * @brief check_if_course_exists
+     * @param params: code, the course code
+     * @return true if the course code is found in the system
+     * false otherwise
+     */
     bool check_if_course_exists(std::string code);
-
+    /**
+     * @brief check_if_student_exists
+     * @param params: account, student account number
+     * @return true if the account number is found in the system
+     * false otherwise
+     */
     bool check_if_student_exists(unsigned long int account);
 
 private:

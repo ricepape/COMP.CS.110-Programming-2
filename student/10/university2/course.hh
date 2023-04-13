@@ -4,8 +4,10 @@
  * -------------
  * Class representing a single course, with name and code, staff and students.
  *
- * In the project, this class should be expanded to
- * include necessary methods and attributes.
+ *   From each course, its code, name, credit points,
+ *   and course staff (there can be several of them) is provided. By default, all courses
+ *   give five credit points. It is possible to add staff and students for a course, as well
+ *   as print course data.
  * */
 #ifndef COURSE_HH
 #define COURSE_HH
@@ -77,14 +79,24 @@ public:
     int get_credits() const;
 
     /**
-     * @brief get_credits
-     * @return the amount of credits this course is valued.
+     * @brief add_student: adding a student into the struct containing
+     * the list of students who signed up for the course
      */
     void add_student(const unsigned long int& student_to_be_added);
 
+    /**
+     * @brief is_student_exists: checking whether the student number is
+     * in the list of students of the course
+     * @return the status value, true if there exists, false otherwise
+     */
     bool is_student_exists(const unsigned long int& student_to_be_checked);
 
-    std::vector<unsigned long int> vector_students();
+    /**
+     * @brief vector_students
+     * @return a vector containing all student numbers whose signed up
+     * in the course
+     */
+    std::vector<std::string> vector_students();
 
 private:
     std::string course_code_;
@@ -92,13 +104,24 @@ private:
     int credits_;
     std::vector<Account*> course_staff_;
 
-    // Possibly (but not necessarily) you will need here an attribute
-    // (e.g. vector) containing students signed up for the course
+    //
+    /**
+     * Define a struct containing the students' number who have signed up
+     * for the course and the pointer next which pointed at the next course
+     * in the linked list
+     * The struct includes:
+     * @parameter: students_signed_up, unsigned long int: contains the
+     * account number of the student.
+     * @parameter: next, List_students*: the pointer pointing to the next student
+     * in the linked list
+     **/
     struct List_students{
         unsigned long int students_signed_up;
         List_students* next;
     };
 
+    // the pointer point to the struct for using the dynamic memory management
+    // for later use
     List_students* first_ =nullptr;
     List_students* last_ = nullptr;
 };

@@ -3,9 +3,14 @@
  * COMP.CS.110 Ohjelmointi 2: Rakenteet / Programming 2: Structures
  * -------------
  * Class representing a student or a staff account in the university system.
+ * When a new person (account) is added, they get an account
+ * number (that can be called a student number in the case of a student). Account numbers
+ * are running numbers such that the first person added gets the number 111111. Besides
+ * the account number, each person has a name and contact information. For each new account,
+ * the program generates automatically an e-mail address with the suffix tuni.fi such that
+ * accounts with the same name have different e-mail addresses.
  *
- * In the project, this class should be expanded to
- * include necessary methods and attributes.
+ *
  * */
 #ifndef ACCOUNT_HH
 #define ACCOUNT_HH
@@ -100,17 +105,34 @@ private:
     std::string first_name_;
     std::string email_;
     const int account_number_;
+
+    // a flag denotes the graduation status of the student
     bool graduated = false;
 
-    struct List_courses{
+    /**
+     * Struct Course_attended: a struct containing the courses' code
+     * which students has signed up for and their related attributes.
+     * The struct includes:
+     * The courses are stored in a linked list, in the order of signing up.
+     * @parameter courses, std::string: containing the course code
+     * @parameter is_completed, bool: containing the status of the course, whether
+     * it is completed or not
+     * @parameter order_completed_, int: containing the complete order of the course.
+     * If the course is incompleted, the order is 0.
+     * @parameter: next, List_students*: the pointer pointing to the next student
+     * in the linked list
+     */
+    struct Course_attended{
         std::string courses;
         bool is_completed;
         int order_completed_;
-        List_courses* next;
+        Course_attended* next;
     };
 
-    List_courses* first_ =nullptr;
-    List_courses* last_ = nullptr;
+    // the pointer point to the struct for using the dynamic memory management
+    // for later use
+    Course_attended* first_ =nullptr;
+    Course_attended* last_ = nullptr;
 
     //to keep track of the order of the completed courses
     int complete_running_number_=1;

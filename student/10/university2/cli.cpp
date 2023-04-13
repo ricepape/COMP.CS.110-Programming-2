@@ -1,3 +1,21 @@
+/* Cli
+ * Cli: identify the commands from the user input.
+ *
+ * The source code file of Cli includes:
+ *   @Function exec
+ *   @Function pop_front
+ *   @Function find_command
+ *   @Function print_help
+ *   @Function print_cmd_info
+ *   @Function read_from_file
+ *
+ * Notes about the program and it's implementation (if any):
+ * All already implemented
+ *
+ * */
+
+
+
 #include "cli.hh"
 #include "utils.hh"
 #include <fstream>
