@@ -183,5 +183,53 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>horizontalSliderRed</sender>
+   <signal>sliderMoved(int)</signal>
+   <receiver>spinBoxRed</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>122</x>
+     <y>140</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>298</x>
+     <y>137</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>horizontalSliderGreen</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>spinBoxGreen</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>131</x>
+     <y>166</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>295</x>
+     <y>170</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>horizontalSliderBlue</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>spinBoxBlue</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>140</x>
+     <y>196</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>307</x>
+     <y>198</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
 </ui>
