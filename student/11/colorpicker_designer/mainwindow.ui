@@ -231,5 +231,21 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>horizontalSliderRed</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>spinBoxRed</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>108</x>
+     <y>140</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>291</x>
+     <y>138</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
 </ui>
