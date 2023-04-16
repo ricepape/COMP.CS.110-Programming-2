@@ -49,7 +49,7 @@ void MainWindow::on_keyLineEdit_returnPressed()
     bool is_found=false;
     for( std::string line; getline( file, line ); )
     {
-        if (ui->matchCheckBox->isChecked()){
+        if (not ui->matchCheckBox->isChecked()){
             std::string upper_line = line;
             transform(upper_line.begin(), upper_line.end(), upper_line.begin(), ::toupper);
             transform(str.begin(), str.end(), str.begin(), ::toupper);
