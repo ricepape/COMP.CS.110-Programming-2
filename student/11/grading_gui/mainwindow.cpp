@@ -30,7 +30,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_calculatePushButton_clicked()
 {
-    QString text = "W_Score: ";
+    QString text = "W-Score: ";
     text += QString::number(score_from_weekly_exercises
                            (ui->spinBoxN->text().toInt(),ui->spinBoxG->text().toInt()));
     text += "\n";
