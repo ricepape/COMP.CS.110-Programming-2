@@ -25,7 +25,8 @@ void MainWindow::on_countButton_clicked()
 
 void MainWindow::on_weightLineEdit_editingFinished()
 {
-    if (ui->weightLineEdit->text().isEmpty() or ui->heightLineEdit->text().isEmpty()){
+    if (ui->weightLineEdit->text().isEmpty() or ui->heightLineEdit->text().isEmpty()
+            or ui->heightLineEdit->text().toDouble()==0){
          ui->resultLabel->setText("Cannot count.");
          return;
     }
