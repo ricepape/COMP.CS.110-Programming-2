@@ -206,3 +206,75 @@ void MainWindow::init_pause_resume()
     connect(pause_resumeButton, &QPushButton::clicked,
             this, &MainWindow::handle_pause_resume_clicks);
 }
+
+/**
+ * @Function set_geometry_game_buttons(): assign the game button to a specific coordinate
+ * with given constants.
+ * QPushButton* button: the button that needs to set up
+ * int x_coordinate, y_coordinate: the coordinates that will be put in for setting the geometry,
+ * according to the position of the button in the vector.
+ **/
+void MainWindow::set_geometry_game_buttons(QPushButton *button,
+                                           int x_coordinate, int y_coordinate)
+{
+    button->setGeometry(14* MARGIN + x_coordinate * (NARROW_BUTTON_WIDTH + MARGIN),
+                        8* MARGIN + y_coordinate *(NARROW_BUTTON_WIDTH + MARGIN),
+                        NARROW_BUTTON_WIDTH,
+                        DEFAULT_BUTTON_HEIGTH);
+}
+
+
+/**
+ * @Function init_gridboard(): implementing the initial stage of the game, including a gridboard
+ * with the buttons on top and bottom and the buttons for the empty slots
+ **/
+void MainWindow::init_gridboard()
+{
+    std::vector<std::vector<Slot_type>> board = board_used.return_board_();
+    // Grid layout for game buttons
+    central = new QWidget(this);
+
+    // Defining red brush and palette for buttons at top and bottom row, respectively
+    QPalette redPalette;
+    redPalette.setColor(QPalette::Button, Qt::red);
+    QPalette greenPalette;
+    greenPalette.setColor(QPalette::Button, Qt::green);
+
+    // Setting game buttons in the grid layout and connecting all of
+    // them to the same slot
+    for (int row = 0; row < static_cast<int>(board.size()); ++row)
+    {
+        std::vector<QPushButton*> row_type;
+        for (int column = 0; column < static_cast<int>(board.at(row).size()); ++column)
+        {
+            QPushButton* pushButton = new QPushButton(this);
+            switch (board.at(row).at(column))
+            {
+            case RED:
+                pushButton->setFixedSize(30, 30);
+                pushButton->setPalette(redPalette);
+                break;
+            case GREEN:
+                pushButton->setFixedSize(30, 30);
+                pushButton->setPalette(greenPalette);
+                break;
+            case EMPTY:
+                pushButton->setFixedSize(20, 20);
+                break;
+            case UNUSED:
+                pushButton->setFixedSize(1, 1);
+                break;
+            }
+            row_type.push_back(pushButton);
+            set_geometry_game_buttons(pushButton,column,row);
+            connect(pushButton, &QPushButton::clicked,
+                    this, &MainWindow::handle_button_clicks);
+        }
+        buttons.push_back(row_type);
+        // create a similar vector for reset game use
+        copy_buttons=buttons;
+    }
+
+    setCentralWidget(central);
+
+}

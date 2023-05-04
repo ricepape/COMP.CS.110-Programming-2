@@ -39,6 +39,15 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    /**
+     * @brief set_geometry_game_buttons(): assign the game button to a specific coordinate
+     * with given constants.
+     * @parameter button, QPushButton* : the button that needs to set up
+     * @parameter x_coordinate, y_coordinate, int: the coordinates that will be put in for
+     * setting the geometry, according to the position of the button in the vector.
+     **/
+    void set_geometry_game_buttons(QPushButton* button, int x_coordinate, int y_coordinate);
+
 
 private:
     Ui::MainWindow *ui;
@@ -67,6 +76,12 @@ private:
     QTimer* timer;
 
     bool pause=true;
+
+    /**
+     * @brief init_gridboard(): implementing the gridboard for the game
+     * on the GUI.
+     */
+    void init_gridboard();
 
     /**
      * @brief on_lcdNumberSec_overflow(): manage the time display
