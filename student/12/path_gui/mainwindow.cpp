@@ -1,3 +1,76 @@
+/* Path_GUI - mainwindow.cpp
+ * The file instructs a Path game for the user, in which the user moves all the
+ * objects from one side to the other within a special path.
+ * This file of the program implements a GUI for the game. The program creates a game board
+ * consisting of a 4x5 grid of buttons, with the top and bottom row is colored differently.
+ * A path of empty spaces is given between the top and bottom row. The player has to move
+ * the buttons within the given path so that the all the buttons in the top row initially
+ * would be in the bottom row, and the bottom buttons must be in the top row.
+ * The user can choose the buttons by clicking to move them. The button must be moved to an empty
+ * space, and there must be an empty path to get to the position. The program gives out errors
+ * for the player to notice.
+ * During the game, the time and the player's number of moves is counted. The error moves is
+ * not counted in the total number of moves.
+ * There are instructions in the game. The player can reset the game at any point while playing.
+ *
+ * The program has several member functions that initialize and control the game.
+ * These include functions to initialize the game board, start and reset the game,
+ * display the necessary functions of the game, and handle button clicks.
+ *
+ * The program includes those functions:
+ * @Function init_gridboard(): setting up the grid board for the game, including
+ * the buttons to play, etc
+ * @Function init_start(): setting up the Start button in the GUI
+ * @Function init_reset(): setting up the Reset button in the GUI for restarting the game
+ * @Function init_pause_resume(): setting up the Pause/Resume button in the GUI
+ * @Function init_instruction(): setting up the Instruction button in the GUI
+ * to show the instructions how to play the game
+ * @Function init_close(): setting up the Close button in the GUI to close the game
+ * @Function init_textBrowser(): setting up the Text browser section in the GUI to inform the
+ * information such as instructions, announcements, warning of the game,... to the player
+ * @Function init_lcdNumberSec(): setting up an object of the QLCDNumber class to display
+ * the elapsed time in the GUI
+ * @Function init_timeLabel(): setting up the "Time" label on the GUI.
+ * @Function init_secondsLabel(): setting up the "seconds" label on the GUI to accompany with
+ * the time display.
+ * @Function init_movesLabel(): setting up the "Moves:" label on the GUI.
+ * @Function init_moves_madeLabel():setting up the label that show the moves the player has made
+ * throughout the game.
+ * @Function init_gridboard(): implementing the initial stage of the game, including a gridboard
+ * with the buttons on top and bottom and the buttons for the empty slots
+ * @Function control_game(): Handling the availability of the elements in the GUI during different
+ * phases of the program. Before starting and after finishing the game, the game button elements
+ * and the related buttons will be disabled.
+ * @Function handle_start_clicks(): Handling the functioning of the program when the player wants
+ * to start playing, including enable the game buttons, start the timer and start counting the moves
+ * @Function handle_close_clicks(): Handling the closing of the program.
+ * @Function handle_reset_clicks(): Reseting all components of the game to initial stage before
+ * starting the game.
+ * @Function handle_instruction_clicks(): Displaying the instructions of the game to the player
+ * from the text Browser section.
+ * @Function handle_pause_resume_clicks(): Handling the pausation and the resumation of
+ * the game while playing
+ * @Function handle_button_clicks(): handling the process of the game button, including the
+ * validity of the chosen button, the movement of the button.
+ * @Function check_if_the_player_wins(): check if all the buttons have been arranged correctly
+ * to win according to the rules. Also different scenarios for winning is applied based on
+ * the number of moves the player used.
+ * @Function set_geometry_game_buttons(): assign the game button to a specific coordinate
+ * with given constants.
+ * @Function on_lcdNumberSec_overflow: slot function connected to a signal emitted
+ * by an LCD number widget when its value overflows, increments the "sec" variable
+ * by one and updates the value displayed on the LCD number widget to the new value
+ *
+ * Program author
+ * Name: Vu Dinh Thi (Thi Vu)
+ * Student number: 151394898
+ * UserID: tpthvu
+ * E-Mail: thi.vu@tuni.fi
+ *
+ * Notes about the program and it's implementation (if any): None
+ *
+ * */
+
 #include "mainwindow.hh"
 #include "ui_mainwindow.h"
 #include "gameboard.hh"
@@ -296,11 +369,13 @@ void MainWindow::handle_instruction_clicks()
 {
     QString text = "The purpose is to move buttons ";
         text += "such that finally they are in opposite places than at the beginning. ";
-        text += "For example, the green ones are at the top and the red ones at the bottom, ";
+        text += "In this case, the green ones are at the top and the red ones at the bottom, ";
         text += "the aim is to reach the situation where green buttons are at the bottom ";
         text += "and the red ones at the top.\n";
         text += "You can move the buttons by clicking at the button and clicking at the position ";
         text += "where you want your button is moved to. ";
+        text += "The non-color button is the empty positions, which creates a path in this game";
+        text += "The starting point must be a colored button, and the destination must be a non-color.";
         text += "It is not allowed to move a button over another one, but the moves are made along ";
         text += "a path of empty places. A move can be as long as there is such kind of path.\n";
         text += "It is possible to reach this final situation with 31 moves, in minimum.";
@@ -362,6 +437,7 @@ void MainWindow::handle_reset_clicks()
     central->setStyleSheet("background-color:white;");
     //given the information on the game reset
     text_browser_->setText("The game is now reseted. Please press Start to play.");
+    pause_resumeButton->setDisabled(true);
 
 
 
@@ -382,6 +458,7 @@ void MainWindow::check_if_the_player_wins()
         //if yes, disable the game buttons and stop the timer
         control_game(false);
         timer->stop();
+        pause_resumeButton->setDisabled(true);
         //check if the moves the player used is minimum
         //if yes, changing the background color and given information
         if (moves_made==31){

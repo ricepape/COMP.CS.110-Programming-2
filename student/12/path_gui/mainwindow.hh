@@ -1,3 +1,19 @@
+/* Class: MainWindow
+ * -----------------
+ * COMP.CS.110 Ohjelmointi 2: Rakenteet / Programming 2: Structures
+ * -----------------
+ * Class representing a main window of the graphical user interfaces for the path game
+ *
+ * Program author
+ * Name: Vu Dinh Thi (Thi Vu)
+ * Student number: 151394898
+ * UserID: tpthvu
+ * E-Mail: thi.vu@tuni.fi
+ *
+ * Notes about the program and it's implementation (if any): None
+ *
+ *
+ * */
 #ifndef MAINWINDOW_HH
 #define MAINWINDOW_HH
 
@@ -77,6 +93,10 @@ public:
      **/
     void handle_button_clicks();
 
+    /**
+     * @brief handle_pause_resume_clicks(): Handling the pausation and the resumation of
+     * the game while playing
+     **/
     void handle_pause_resume_clicks();
 
 
@@ -97,16 +117,19 @@ private:
     Point button_to_be_moved;
     Point where_to_move;
 
+    //push button for the necessary commands on the game
     QPushButton* startButton;
     QPushButton* resetButton;
     QPushButton* instructionButton;
     QPushButton* pause_resumeButton;
+    //text browser for informing
     QTextBrowser* text_browser_;
     QLabel* moves_made_Label_;
     QWidget* central;
     QLCDNumber* lcdNumberSec;
     QTimer* timer;
 
+    //a flag denote if the game is needed to be paused or not
     bool pause=true;
 
     /**
