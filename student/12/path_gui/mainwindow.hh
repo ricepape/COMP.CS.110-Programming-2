@@ -1,20 +1,3 @@
-/* Class: MainWindow
- * -----------------
- * COMP.CS.110 Ohjelmointi 2: Rakenteet / Programming 2: Structures
- * -----------------
- * Class representing a main window of the graphical user interfaces for the path game
- *
- * Program author
- * Name: Vu Dinh Thi (Thi Vu)
- * Student number: 151394898
- * UserID: tpthvu
- * E-Mail: thi.vu@tuni.fi
- *
- * Notes about the program and it's implementation (if any): None
- *
- *
- * */
-
 #ifndef MAINWINDOW_HH
 #define MAINWINDOW_HH
 
@@ -41,6 +24,13 @@ public:
 
 
     /**
+     * @brief control_game: enable or disable the game buttons
+     * @parameter enable, bool: true if the buttons need to be enabled, false if the
+     * buttons need to be disabled.
+     */
+    void control_game(bool enable);
+
+    /**
      * @brief handle_start_clicks(): Handling the functioning of the program when the
      * player wants to start playing, including enable the game buttons, start the
      * timer and start counting the moves
@@ -65,6 +55,13 @@ public:
     void handle_reset_clicks();
 
     /**
+     * @brief check_if_the_player_wins(): heck if all the buttons have been
+     * arranged correctly to win according to the rules. Also different
+     * scenarios for winning is applied based on the number of moves the player used.
+     */
+    void check_if_the_player_wins();
+
+    /**
      * @brief set_geometry_game_buttons(): assign the game button to a specific coordinate
      * with given constants.
      * @parameter button, QPushButton* : the button that needs to set up
@@ -75,9 +72,11 @@ public:
 
 
     /**
-     * @brief handle_pause_resume_clicks(): Handling the pausation and the resumation of
-     * the game while playing
+     * @brief handle_button_clicks(): handling the process of the game button,
+     * including the validity of the chosen button, the movement of the button.
      **/
+    void handle_button_clicks();
+
     void handle_pause_resume_clicks();
 
 

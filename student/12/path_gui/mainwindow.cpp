@@ -45,6 +45,19 @@ MainWindow::~MainWindow()
 }
 
 /**
+ * @Function on_lcdNumberSec_overflow: slot function connected to a signal emitted
+ * by an LCD number widget when its value overflows, increments the "sec" variable
+ * by one and updates the value displayed on the LCD number widget to the new value
+ **/
+void MainWindow::on_lcdNumberSec_overflow()
+{
+    int sec = lcdNumberSec->intValue();
+
+    sec++;
+    lcdNumberSec->display(sec);
+}
+
+/**
  * @Function init_start: setting up the Start button in the GUI
  **/
 void MainWindow::init_start()
@@ -207,6 +220,24 @@ void MainWindow::init_pause_resume()
             this, &MainWindow::handle_pause_resume_clicks);
 }
 
+/**
+ * @Function control_game(): Handling the availability of the elements in the GUI during different
+ * phases of the program. Before starting and after finishing the game, the game button elements
+ * and the related buttons will be disabled.
+ * bool enable: true if the buttons are required to be enable for the game, false otherwise.
+ **/
+void MainWindow::control_game(bool enable)
+{
+    //going through all the game buttons
+    for (int row = 0; row < static_cast<int>(buttons.size()); ++row)
+    {
+        for (int column = 0; column < static_cast<int>(buttons.at(row).size()); ++column)
+        {
+            //enable or disable the buttons
+            buttons.at(row).at(column)->setEnabled(enable);
+        }
+    }
+}
 
 /**
  * @Function handle_pause_resume_clicks(): Handling the pausation and the resumation of
@@ -337,6 +368,36 @@ void MainWindow::handle_reset_clicks()
 }
 
 /**
+ * @Function check_if_the_player_wins(): check if all the buttons have been arranged correctly
+ * to win according to the rules. Also different scenarios for winning is applied based on
+ * the number of moves the player used.
+ **/
+void MainWindow::check_if_the_player_wins()
+{
+    //calculate the moves from the clicks
+    int moves_made=(clicks-(clicks%2))/2;
+    moves_made_Label_->setText(QString::number(moves_made));
+    //check if the game is completed
+    if(board_used.is_game_over()){
+        //if yes, disable the game buttons and stop the timer
+        control_game(false);
+        timer->stop();
+        //check if the moves the player used is minimum
+        //if yes, changing the background color and given information
+        if (moves_made==31){
+            text_browser_->setText("The game is completed. Congratulations!\n"
+"                               You have completed the game with the minimum moves!\n"
+                                "Press Reset to start a new game");
+            central->setStyleSheet("background-color:yellow;");
+
+        } else {
+        text_browser_->setText("The game is completed. Congratulations!\n"
+                                "Press Reset to start a new game");
+        }
+    }
+}
+
+/**
  * @Function set_geometry_game_buttons(): assign the game button to a specific coordinate
  * with given constants.
  * QPushButton* button: the button that needs to set up
@@ -407,3 +468,86 @@ void MainWindow::init_gridboard()
     setCentralWidget(central);
 
 }
+
+/**
+ * @Function handle_button_clicks(): handling the process of the game button, including the
+ * validity of the chosen button, the movement of the button.
+ **/
+void MainWindow::handle_button_clicks()
+{
+    //a move turn includes 2 clicks: 1 click to the initial button and 1 click to the place
+    //where the button should be moved
+    clicks+=1;
+    std::vector<std::vector<Slot_type>> check_point = board_used.return_board_();
+    //running through the buttons to find the one that is clicked
+    for (int row = 0; row < static_cast<int>(buttons.size()); ++row)
+    {
+        for (int column = 0; column < static_cast<int>(buttons.at(row).size()); ++column)
+        {
+            if (buttons.at(row).at(column) == sender()){
+                //reset the text browser to erase the warning
+                // in case the player's last step is against the rules
+                text_browser_->setText("");
+                // if the click is the first of a turn
+                if (clicks % 2!=0){
+                    // then the button being clicked must be the colored one,
+                    // or else the warning is given
+                    if(check_point.at(row).at(column)!=GREEN and check_point.at(row).at(column)!=RED){
+                        QString text=INVALID_POINT+"\n"+BUTTON_MISSING;
+                        text_browser_->setText(text);
+                        //the turn is considered as illegal, and a new turn is started
+                        //thus the click is erased
+                        clicks-=1;
+                        return;
+                    }
+                    //store the coordinate of the button to be moved
+                    button_to_be_moved.y=row;
+                    button_to_be_moved.x=column;
+                    //if the click is the second of a turn
+                } else {
+                    //store the coordinate of where to move
+                    where_to_move.y=row;
+                    where_to_move.x=column;
+                    //the moving place must be empty
+                    if(board_used.which_slot(where_to_move)!=EMPTY){
+                        //if the initial and the destination point is the same,
+                        //warning is given
+                        if(row == button_to_be_moved.y and column ==button_to_be_moved.x){
+                          text_browser_->setText(IDENTICAL_POINTS);
+                        }
+                        // if the destination is another button
+                        // warning also given
+                        else {
+                        QString text=INVALID_POINT+"\n"+NOT_EMPTY;
+                        text_browser_->setText(text);
+                        }
+                        //the turn is considered as illegal, and a new turn is started
+                        //thus the click is erased
+                        clicks-=2;
+                        return;
+                    }
+                    // check if the button is able to moved
+                    if (board_used.move(button_to_be_moved, where_to_move)){
+                        set_geometry_game_buttons(buttons.at(button_to_be_moved.y).
+                                                  at(button_to_be_moved.x),where_to_move.x,where_to_move.y);
+                        set_geometry_game_buttons(buttons.at(where_to_move.y).
+                                                  at(where_to_move.x),button_to_be_moved.x,button_to_be_moved.y);
+                        QPushButton* temp=buttons.at(button_to_be_moved.y).at(button_to_be_moved.x);
+                        buttons.at(button_to_be_moved.y).at(button_to_be_moved.x)=
+                                 buttons.at(where_to_move.y).at(where_to_move.x);
+                        buttons.at(where_to_move.y).at(where_to_move.x)=temp;
+                    }
+                    // if it cannot move, then there should be no path to move.
+                    // warning is given, the turn is considered as illegal,
+                    // and the click is erased.
+                    else {
+                        text_browser_->setText(CANNOT_MOVE);
+                        clicks-=2;
+                        }
+                    }
+            }
+        }
+    }
+    check_if_the_player_wins();
+}
+
