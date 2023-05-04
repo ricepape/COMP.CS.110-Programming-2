@@ -118,6 +118,80 @@ void MainWindow::init_textBrowser()
 }
 
 /**
+ * @Function init_lcdNumberSec(): setting up an object of the QLCDNumber class to display
+ * the elapsed time in the GUI
+ **/
+void MainWindow::init_lcdNumberSec()
+{
+    lcdNumberSec = new QLCDNumber(this);
+    lcdNumberSec->setGeometry(5* MARGIN,
+                              4* MARGIN,
+                              100,
+                              DEFAULT_BUTTON_HEIGTH);
+
+    timer = new QTimer(this);
+    connect(timer, &QTimer::timeout,
+            this, &MainWindow::on_lcdNumberSec_overflow);
+}
+
+/**
+ * @Function init_timeLabel(): setting up the "Time" label on the GUI to accompany with
+ * the time display object.
+ **/
+void MainWindow::init_timeLabel()
+{
+    QLabel* timeLabel = new QLabel(this);
+    timeLabel->setGeometry(3* MARGIN,
+                              4* MARGIN,
+                              100,
+                              DEFAULT_BUTTON_HEIGTH);
+    timeLabel->setText("Time: ");
+}
+
+/**
+ * @Function init_secondsLabel: setting up the label with content "seconds" on the GUI
+ * to accompany with the time display object.
+ **/
+void MainWindow::init_secondsLabel()
+{
+    QLabel* secondLabel = new QLabel(this);
+    secondLabel->setGeometry(10.5* MARGIN,
+                              4* MARGIN,
+                              100,
+                              DEFAULT_BUTTON_HEIGTH);
+    secondLabel->setText("seconds");
+}
+
+/**
+ * @Function init_movesLabel: setting up the label with content "Moves: " on the GUI
+ * to accompany with the moves the player has used's display object.
+ **/
+void MainWindow::init_movesLabel()
+{
+    QLabel* moveLabel = new QLabel(this);
+    moveLabel->setGeometry(17* MARGIN,
+                              4* MARGIN,
+                              100,
+                              DEFAULT_BUTTON_HEIGTH);
+    moveLabel->setText("Moves: ");
+}
+
+
+/**
+ * @Function init_moves_madeLabel: setting up the label displaying the number of moves
+ * the player has used on the GUI.
+ **/
+void MainWindow::init_moves_madeLabel()
+{
+    moves_made_Label_ = new QLabel(this);
+    moves_made_Label_->setGeometry(22* MARGIN,
+                              4* MARGIN,
+                              100,
+                              DEFAULT_BUTTON_HEIGTH);
+    moves_made_Label_->setText(0);
+}
+
+/**
  * @Function init_pause_resume: setting up the Pause/Resume button in the GUI
  **/
 void MainWindow::init_pause_resume()

@@ -1,3 +1,20 @@
+/* Class: MainWindow
+ * -----------------
+ * COMP.CS.110 Ohjelmointi 2: Rakenteet / Programming 2: Structures
+ * -----------------
+ * Class representing a main window of the graphical user interfaces for the path game
+ *
+ * Program author
+ * Name: Vu Dinh Thi (Thi Vu)
+ * Student number: 151394898
+ * UserID: tpthvu
+ * E-Mail: thi.vu@tuni.fi
+ *
+ * Notes about the program and it's implementation (if any): None
+ *
+ *
+ * */
+
 #ifndef MAINWINDOW_HH
 #define MAINWINDOW_HH
 
@@ -23,7 +40,6 @@ public:
     ~MainWindow();
 
 
-
 private:
     Ui::MainWindow *ui;
 
@@ -45,8 +61,18 @@ private:
     QPushButton* instructionButton;
     QPushButton* pause_resumeButton;
     QTextBrowser* text_browser_;
+    QLabel* moves_made_Label_;
+    QWidget* central;
+    QLCDNumber* lcdNumberSec;
+    QTimer* timer;
 
     bool pause=true;
+
+    /**
+     * @brief on_lcdNumberSec_overflow(): manage the time display
+     * when the signal is overflown
+     */
+    void on_lcdNumberSec_overflow();
 
     /**
      * @brief init_start(): implement the Start button on the GUI.
@@ -73,6 +99,33 @@ private:
      * for later informations to the player.
      */
     void init_textBrowser();
+
+    /**
+     * @brief init_lcdNumberSec(): implement the QLCD number for the time display
+     * on the GUI.
+     */
+    void init_lcdNumberSec();
+
+    /**
+     * @brief init_timeLabel(): implement the label "Time: " on the window
+     */
+    void init_timeLabel();
+
+    /**
+     * @brief init_secondsLabel(): implement the label "seconds" on the window
+     */
+    void init_secondsLabel();
+
+    /**
+     * @brief init_secondsLabel(): implement the label "Moves: " on the window
+     */
+    void init_movesLabel();
+
+    /**
+     * @brief init_moves_madeLabel(): implement the label displaying the number of moves
+     * the player has used on the window
+     */
+    void init_moves_madeLabel();
 
     /**
      * @brief init_pause_resume(): implement the Pause/Resume button on the GUI.
