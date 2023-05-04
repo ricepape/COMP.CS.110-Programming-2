@@ -207,6 +207,135 @@ void MainWindow::init_pause_resume()
             this, &MainWindow::handle_pause_resume_clicks);
 }
 
+
+/**
+ * @Function handle_pause_resume_clicks(): Handling the pausation and the resumation of
+ * the game while playing
+ **/
+void MainWindow::handle_pause_resume_clicks()
+{
+    //denote the flag pause, if it's true then the click is deemed to pause the game,
+    //otherwise continue the game
+    if (pause){
+        pause=false;
+        timer->stop();
+        //disable the game buttons
+        control_game(false);
+        text_browser_->setText("The game is paused. Press the button again to resume the game.");
+
+    } else {
+        pause=true;
+        //enable the game buttons
+        control_game(true);
+        timer->start(1000);
+        text_browser_->setText("The game is now resumed.");
+    }
+}
+
+/**
+ * @Function handle_start_clicks(): Handling the functioning of the program when the player wants
+ * to start playing, including enable the game buttons, start the timer and start counting the moves
+ **/
+void MainWindow::handle_start_clicks()
+{
+    //Start the timer
+    timer->start(1000);
+    //Enable the buttons for the game
+    control_game(true);
+    //Enable the pause/resume button
+    pause_resumeButton->setEnabled(true);
+    startButton->setDisabled(true);
+    text_browser_->setText("The game has started!");
+
+}
+
+/**
+ * @Function handle_close_clicks(): Handling the closing of the program.
+ **/
+void MainWindow::handle_close_clicks()
+{
+    QApplication::quit();
+}
+
+/**
+ * @Function handle_instruction_clicks(): Displaying the instructions of the game to the player
+ * from the text Browser section.
+ **/
+void MainWindow::handle_instruction_clicks()
+{
+    QString text = "The purpose is to move buttons ";
+        text += "such that finally they are in opposite places than at the beginning. ";
+        text += "For example, the green ones are at the top and the red ones at the bottom, ";
+        text += "the aim is to reach the situation where green buttons are at the bottom ";
+        text += "and the red ones at the top.\n";
+        text += "You can move the buttons by clicking at the button and clicking at the position ";
+        text += "where you want your button is moved to. ";
+        text += "It is not allowed to move a button over another one, but the moves are made along ";
+        text += "a path of empty places. A move can be as long as there is such kind of path.\n";
+        text += "It is possible to reach this final situation with 31 moves, in minimum.";
+        text_browser_->setText(text);
+}
+
+/**
+ * @Function handle_reset_clicks(): Reseting all components of the game to initial stage before
+ * starting the game.
+ **/
+void MainWindow::handle_reset_clicks()
+{
+    //running through the elements in the initial gridboard
+    for (int row = 0; row < static_cast<int>(copy_buttons.size()); ++row)
+    {
+        for (int column = 0; column < static_cast<int>(copy_buttons.at(row).size()); ++column)
+        {
+            //running through the elements in the current gridboard
+            for (int check_row = 0; check_row < static_cast<int>(buttons.size()); ++check_row)
+            {
+                for (int check_column = 0; check_column < static_cast<int>(buttons.at(check_row).size()); ++check_column)
+                {
+                    //find the buttons in the current gridboard in the initial order
+                    //which is before starting the game
+                    //find the button
+                    if (copy_buttons.at(row).at(column)==buttons.at(check_row).at(check_column))
+                    {
+                        //rearrange the position of the button on the GUI
+                        //corresponds to the initial stage
+                        set_geometry_game_buttons(buttons.at(check_row).at(check_column)
+                                                  ,column,row);
+                        set_geometry_game_buttons(buttons.at(row).at(column)
+                                                  ,check_column,check_row);
+                        //rearrange the position of the buttons pointer in the vector buttons
+                        QPushButton* temp=buttons.at(row).at(column);
+                        buttons.at(row).at(column)=
+                                 buttons.at(check_row).at(check_column);
+                        buttons.at(check_row).at(check_column)=temp;
+                    }
+                }
+            }
+        }
+    }
+    //assign new GameBoard type
+    GameBoard new_board;
+    board_used=new_board;
+    //reset the timer
+    lcdNumberSec->display(0);
+    timer->stop();
+    //reset the move counter
+    moves_made_Label_->setText(0);
+    //reset the clicks counter
+    clicks=0;
+    //disabled the game buttons
+    control_game(false);
+    //enable the start button
+    startButton->setEnabled(true);
+    //arrange the background color of the game
+    central->setStyleSheet("background-color:white;");
+    //given the information on the game reset
+    text_browser_->setText("The game is now reseted. Please press Start to play.");
+
+
+
+}
+
 /**
  * @Function set_geometry_game_buttons(): assign the game button to a specific coordinate
  * with given constants.

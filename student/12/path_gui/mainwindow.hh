@@ -39,6 +39,31 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+
+    /**
+     * @brief handle_start_clicks(): Handling the functioning of the program when the
+     * player wants to start playing, including enable the game buttons, start the
+     * timer and start counting the moves
+     */
+    void handle_start_clicks();
+
+    /**
+     * @brief handle_instruction_clicks(): Displaying the instructions of the
+     * game to the player from the text Browser section.
+     */
+    void handle_instruction_clicks();
+
+    /**
+     * @brief handle_close_clicks(): Handling the closing of the program.
+     */
+    void handle_close_clicks();
+
+    /**
+     * @brief handle_reset_clicks(): Reseting all components of the game to
+     * initial stage before starting the game.
+     */
+    void handle_reset_clicks();
+
     /**
      * @brief set_geometry_game_buttons(): assign the game button to a specific coordinate
      * with given constants.
@@ -47,6 +72,14 @@ public:
      * setting the geometry, according to the position of the button in the vector.
      **/
     void set_geometry_game_buttons(QPushButton* button, int x_coordinate, int y_coordinate);
+
+
+    /**
+     * @brief handle_pause_resume_clicks(): Handling the pausation and the resumation of
+     * the game while playing
+     **/
+    void handle_pause_resume_clicks();
+
 
 
 private:
