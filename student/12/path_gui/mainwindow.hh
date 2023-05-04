@@ -22,23 +22,7 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-    void init_gridboard();
-    void handle_button_clicks();
-    void on_lcdNumberSec_overflow();
-    void init_start();
-    void init_reset();
-    void init_instruction();
-    void init_textBrowser();
-    void init_lcdNumberSec();
-    void init_timeLabel();
-    void init_secondsLabel();
-    void init_movesLabel();
-    void init_moves_madeLabel();
-    void control_game(bool enable);
-    void handle_start_clicks();
-    void handle_instruction_clicks();
-    void handle_reset_clicks();
-    void init_game();
+
 
 private:
     Ui::MainWindow *ui;
@@ -46,20 +30,55 @@ private:
     std::vector<std::vector<QPushButton*>> buttons;
     std::vector<std::vector<QPushButton*>> copy_buttons;
 
-
+    //counting the clicks of the player
     int clicks=0;
 
+    //GameBoard used in the game
     GameBoard board_used;
 
+    //the point for the initial and destination button
     Point button_to_be_moved;
     Point where_to_move;
 
     QPushButton* startButton;
     QPushButton* resetButton;
     QPushButton* instructionButton;
+    QPushButton* pause_resumeButton;
     QTextBrowser* text_browser_;
-    QLabel* moves_made_Label_;
-    QWidget* central;
+
+    bool pause=true;
+
+    /**
+     * @brief init_start(): implement the Start button on the GUI.
+     */
+    void init_start();
+
+    /**
+     * @brief init_reset(): implement the Reset button on the GUI.
+     */
+    void init_reset();
+
+    /**
+     * @brief init_instruction(): implement the Instruction button on the GUI.
+     */
+    void init_instruction();
+
+    /**
+     * @brief init_close(): implement the Close button on the GUI.
+     */
+    void init_close();
+
+    /**
+     * @brief init_textBrowser(): implement the text browser section on the GUI
+     * for later informations to the player.
+     */
+    void init_textBrowser();
+
+    /**
+     * @brief init_pause_resume(): implement the Pause/Resume button on the GUI.
+     */
+    void init_pause_resume();
+
 
     // Space between elements, both horizontally and vertically
     const int MARGIN = 20;
@@ -68,20 +87,11 @@ private:
     const int NARROW_BUTTON_WIDTH = 20;
     const int DEFAULT_BUTTON_HEIGTH = 30;
 
-    // Size of the text browser
-    const int DISPLAY_WIDTH = 200;
-    const int DISPLAY_HEIGTH = 30;
-
-    // Location of the graphics view and scene
-    const int VIEW_X = 20;
-    const int VIEW_Y = 350;
-
+    // Errors string of movement.
     QString INVALID_POINT = "Invalid start/destination point.";
     QString BUTTON_MISSING = "Button missing in start point.";
     QString NOT_EMPTY = "Destination point is not empty.";
     QString IDENTICAL_POINTS = "Given points are the same.";   // Actually useless
     QString CANNOT_MOVE = "There is no path between start point and destination point.";
-    QString GAME_OVER = "Game over. Congratulations!";
-    QString MOVES_MADE = " move(s) made.";
 };
 #endif // MAINWINDOW_HH

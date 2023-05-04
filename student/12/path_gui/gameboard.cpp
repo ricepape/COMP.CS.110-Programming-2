@@ -1,3 +1,43 @@
+/* Path_GUI - gameboard.cpp
+ * The file instructs a path game in the ASCII prints, creating a game board
+ * consisting of a 4x5 grid of buttons, with the top and bottom row is colored differently.
+ * A path of empty spaces is given between the top and bottom row. The player has to move
+ * the buttons within the given path so that the all the buttons in the top row initially
+ * would be in the bottom row, and the bottom buttons must be in the top row. The player gives
+ * the coordinates of the initial and destination points to move.
+ *
+ * The program has several member functions that checks the validity of the point as well
+ * as the movement, and instruct on the game
+ *
+ * The program includes those functions:
+ * @Function print(): prints the grid
+ * @Function move: If possible, moves a button in the given grid from start point to
+ * destination point. A move may consists of horizontal and vertical steps.
+ * @Function is_game_over: Checks if the game is over. Returns true, if all red buttons
+ * are on the top row and all green buttons are on the bottom row, otherwise returns false.
+ * @Function which_slot: Returns the slot occupying the given point.
+ * @Function is_valid_point: Checks the validity of the given point.
+ * @Function return_board_: reutnr the Gameboard
+ * @Function init_top_or_bottom_row: Initializes a row, all buttons with the given color.
+ * Used for initializing the top and bottom rows.
+ * @Function init_grid(): Initializes the game grid
+ * @Function horizontal_move: makes a horizontal move in the given grid along the given row
+ * if possible, return true if the move is possible, otherwise returns false.
+ * @Function vertical_move: makes a vertical move in the given grid along the given column
+ * if possible, return true if the move is possible, otherwise returns false.
+ * @Function is_same_color: Checks if all buttons on the given row are of the same (given) color.
+ * Returns true, if they are of the same color, otherwise returns false.
+ *
+ * Program author
+ * Name: Vu Dinh Thi (Thi Vu)
+ * Student number: 151394898
+ * UserID: tpthvu
+ * E-Mail: thi.vu@tuni.fi
+ *
+ * Notes about the program and it's implementation (if any): Already implemented
+ * in the template
+ *
+ * */
 #include "gameboard.hh"
 #include <iostream>
 

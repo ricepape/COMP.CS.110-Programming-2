@@ -1,3 +1,14 @@
+/* Class: GameBoard
+ * -----------------
+ * COMP.CS.110 Ohjelmointi 2: Rakenteet / Programming 2: Structures
+ * -----------------
+ * Class representing a path gameboard, including the rules and the movement of the slots
+ *
+ * Notes about the program and it's implementation (if any): Already implemented, only
+ * function return_board is newly added
+ *
+ * */
+
 #ifndef GAMEBOARD_HH
 #define GAMEBOARD_HH
 
@@ -51,6 +62,7 @@ public:
     // Returns true if the point is inside the game grid, otherwise returns false.
     bool is_valid_point(const Point p);
 
+    //return the Gameboard
     std::vector<std::vector<Slot_type>> return_board_();
 
 private:
